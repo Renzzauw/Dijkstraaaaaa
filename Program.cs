@@ -10,6 +10,16 @@ namespace Concurrency_P2
     {
         static void Main(string[] args)
         {
+            // Input
+            string firstLine = Console.ReadLine();
+            string[] input = firstLine.Split();
+            Console.WriteLine(input[0]);
+            ushort poortNummer = ushort.Parse(input[0]);
+            ushort[] buurPoorten = new ushort[input.Length -1];
+            for (int i = 1; i < input.Length; i++)
+            {
+                buurPoorten[i - 1] = ushort.Parse(input[i]);
+            }
         }
     }
 }
