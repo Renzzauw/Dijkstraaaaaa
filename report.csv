@@ -3,13 +3,13 @@ std-Opstarten;0;1;0;4
 std-Connect;0;0;0;1
 std-Disconnect;0;0;0;1
 std-Berichten;0;0;0;1
-std-BerichtNaVerandering;0;0;0;0,5
+std-BerichtNaVerandering;0;0;0;0.5
 std-NetwerkPartitie;0;0;0;1
-Opstarten;0;1;0;4
+Opstarten;0;2;0;4
 Connect;0;0;0;1
 Disconnect;0;0;0;1
 Berichten;0;0;0;1
-BerichtNaVerandering;0;0;0;0,5
+BerichtNaVerandering;0;0;0;0.5
 NetwerkPartitie;0;0;0;1
 BovenLimiet;0;1;0;1
 Totaal;-;-;0;(van 18)
@@ -19,47 +19,18 @@ Let op: deze berekening is niet het definitieve cijfer. Dit is alleen maar een a
 ------------------------------------
 
 Testcase;Status;Tijd;Omschrijving
-Standaard;Error;13,27;Opstarten netwerk
-Random;Incorrect;6,26;Opstarten netwerk
+Standaard;Error;14.27;Opstarten netwerk
+Random;Error;14.28;Opstarten netwerk
+2xStandaard;Error;14.27;Opstarten netwerk
 
 ------------------------------------
 
-1;Standaard;Error;13,27;Opstarten netwerk
+1;Standaard;Error;14.27;Opstarten netwerk
 Test 1 - Standaard
 
 Process 55500 gercasht met foutmelding:
 
-Fout bij opzetten netwerk - de routing-tabel is incorrect.
-Het programma ziet de verbinding van 55500 naar 55501 niet.
-Het programma ziet de verbinding van 55500 naar 55502 niet.
-Het programma ziet de verbinding van 55500 naar 55503 niet.
-Het programma ziet de verbinding van 55500 naar 55504 niet.
-Het programma ziet de verbinding van 55500 naar 55505 niet.
-Het programma ziet de verbinding van 55501 naar 55500 niet.
-Het programma ziet de verbinding van 55501 naar 55502 niet.
-Het programma ziet de verbinding van 55501 naar 55503 niet.
-Het programma ziet de verbinding van 55501 naar 55504 niet.
-Het programma ziet de verbinding van 55501 naar 55505 niet.
-Het programma ziet de verbinding van 55502 naar 55500 niet.
-Het programma ziet de verbinding van 55502 naar 55501 niet.
-Het programma ziet de verbinding van 55502 naar 55503 niet.
-Het programma ziet de verbinding van 55502 naar 55504 niet.
-Het programma ziet de verbinding van 55502 naar 55505 niet.
-Het programma ziet de verbinding van 55503 naar 55500 niet.
-Het programma ziet de verbinding van 55503 naar 55501 niet.
-Het programma ziet de verbinding van 55503 naar 55502 niet.
-Het programma ziet de verbinding van 55503 naar 55504 niet.
-Het programma ziet de verbinding van 55503 naar 55505 niet.
-Het programma ziet de verbinding van 55504 naar 55500 niet.
-Het programma ziet de verbinding van 55504 naar 55501 niet.
-Het programma ziet de verbinding van 55504 naar 55502 niet.
-Het programma ziet de verbinding van 55504 naar 55503 niet.
-Het programma ziet de verbinding van 55504 naar 55505 niet.
-Het programma ziet de verbinding van 55505 naar 55500 niet.
-Het programma ziet de verbinding van 55505 naar 55501 niet.
-Het programma ziet de verbinding van 55505 naar 55502 niet.
-Het programma ziet de verbinding van 55505 naar 55503 niet.
-Het programma ziet de verbinding van 55505 naar 55504 niet.
+Unhandled Exception:
 
 Log
 start Concurrency-P2.exe 55500 55501 55502
@@ -69,7 +40,6 @@ start Concurrency-P2.exe 55503 55502 55505
 start Concurrency-P2.exe 55504 55502 55505
 start Concurrency-P2.exe 55505 55503 55504
 55500 > R
-55500 < R
 55501 > R
 55502 > R
 55503 > R
@@ -78,7 +48,6 @@ start Concurrency-P2.exe 55505 55503 55504
 
 Process 55500:
 > R
-R
 
 Process 55501:
 > R
@@ -97,82 +66,16 @@ Process 55505:
 
 ------------------------------------
 
-2;Random;Incorrect;6,26;Opstarten netwerk
+2;Random;Error;14.28;Opstarten netwerk
 Test 2 - Random
 
-Fout bij opzetten netwerk - de routing-tabel is incorrect.
-Het programma ziet de verbinding van 55500 naar 55501 niet.
-Het programma ziet de verbinding van 55500 naar 55502 niet.
-Het programma ziet de verbinding van 55500 naar 55503 niet.
-Het programma ziet de verbinding van 55500 naar 55504 niet.
-Het programma ziet de verbinding van 55500 naar 55505 niet.
-Het programma ziet de verbinding van 55500 naar 55506 niet.
-Het programma ziet de verbinding van 55500 naar 55507 niet.
-Het programma ziet de verbinding van 55500 naar 55508 niet.
-Het programma ziet de verbinding van 55501 naar 55500 niet.
-Het programma ziet de verbinding van 55501 naar 55502 niet.
-Het programma ziet de verbinding van 55501 naar 55503 niet.
-Het programma ziet de verbinding van 55501 naar 55504 niet.
-Het programma ziet de verbinding van 55501 naar 55505 niet.
-Het programma ziet de verbinding van 55501 naar 55506 niet.
-Het programma ziet de verbinding van 55501 naar 55507 niet.
-Het programma ziet de verbinding van 55501 naar 55508 niet.
-Het programma ziet de verbinding van 55502 naar 55500 niet.
-Het programma ziet de verbinding van 55502 naar 55501 niet.
-Het programma ziet de verbinding van 55502 naar 55503 niet.
-Het programma ziet de verbinding van 55502 naar 55504 niet.
-Het programma ziet de verbinding van 55502 naar 55505 niet.
-Het programma ziet de verbinding van 55502 naar 55506 niet.
-Het programma ziet de verbinding van 55502 naar 55507 niet.
-Het programma ziet de verbinding van 55502 naar 55508 niet.
-Het programma ziet de verbinding van 55503 naar 55500 niet.
-Het programma ziet de verbinding van 55503 naar 55501 niet.
-Het programma ziet de verbinding van 55503 naar 55502 niet.
-Het programma ziet de verbinding van 55503 naar 55504 niet.
-Het programma ziet de verbinding van 55503 naar 55505 niet.
-Het programma ziet de verbinding van 55503 naar 55506 niet.
-Het programma ziet de verbinding van 55503 naar 55507 niet.
-Het programma ziet de verbinding van 55503 naar 55508 niet.
-Het programma ziet de verbinding van 55504 naar 55500 niet.
-Het programma ziet de verbinding van 55504 naar 55501 niet.
-Het programma ziet de verbinding van 55504 naar 55502 niet.
-Het programma ziet de verbinding van 55504 naar 55503 niet.
-Het programma ziet de verbinding van 55504 naar 55505 niet.
-Het programma ziet de verbinding van 55504 naar 55506 niet.
-Het programma ziet de verbinding van 55504 naar 55507 niet.
-Het programma ziet de verbinding van 55504 naar 55508 niet.
-Het programma ziet de verbinding van 55505 naar 55500 niet.
-Het programma ziet de verbinding van 55505 naar 55501 niet.
-Het programma ziet de verbinding van 55505 naar 55502 niet.
-Het programma ziet de verbinding van 55505 naar 55503 niet.
-Het programma ziet de verbinding van 55505 naar 55504 niet.
-Het programma ziet de verbinding van 55505 naar 55506 niet.
-Het programma ziet de verbinding van 55505 naar 55507 niet.
-Het programma ziet de verbinding van 55505 naar 55508 niet.
-Het programma ziet de verbinding van 55506 naar 55500 niet.
-Het programma ziet de verbinding van 55506 naar 55501 niet.
-Het programma ziet de verbinding van 55506 naar 55502 niet.
-Het programma ziet de verbinding van 55506 naar 55503 niet.
-Het programma ziet de verbinding van 55506 naar 55504 niet.
-Het programma ziet de verbinding van 55506 naar 55505 niet.
-Het programma ziet de verbinding van 55506 naar 55507 niet.
-Het programma ziet de verbinding van 55506 naar 55508 niet.
-Het programma ziet de verbinding van 55507 naar 55500 niet.
-Het programma ziet de verbinding van 55507 naar 55501 niet.
-Het programma ziet de verbinding van 55507 naar 55502 niet.
-Het programma ziet de verbinding van 55507 naar 55503 niet.
-Het programma ziet de verbinding van 55507 naar 55504 niet.
-Het programma ziet de verbinding van 55507 naar 55505 niet.
-Het programma ziet de verbinding van 55507 naar 55506 niet.
-Het programma ziet de verbinding van 55507 naar 55508 niet.
-Het programma ziet de verbinding van 55508 naar 55500 niet.
-Het programma ziet de verbinding van 55508 naar 55501 niet.
-Het programma ziet de verbinding van 55508 naar 55502 niet.
-Het programma ziet de verbinding van 55508 naar 55503 niet.
-Het programma ziet de verbinding van 55508 naar 55504 niet.
-Het programma ziet de verbinding van 55508 naar 55505 niet.
-Het programma ziet de verbinding van 55508 naar 55506 niet.
-Het programma ziet de verbinding van 55508 naar 55507 niet.
+Process 55503 gercasht met foutmelding:
+Unhandled Exception: System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseUInt32(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.UInt16.Parse(String s, NumberStyles style, NumberFormatInfo info)
+   at System.UInt16.Parse(String s)
+   at Concurrency_P2.Program.Main(String[] args) in D:\Documents\GitHub\Concurrency-P2\Program.cs:line 24
 
 Log
 start Concurrency-P2.exe 55500 55501 55502 55503 55506 55507
@@ -219,6 +122,81 @@ Process 55507:
 > R
 
 Process 55508:
+> R
+
+------------------------------------
+
+3;2xStandaard;Error;14.27;Opstarten netwerk
+Test 3 - 2xStandaard
+
+Process 55503 gercasht met foutmelding:
+Unhandled Exception: System.FormatException: Input string was not in a correct format.
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseUInt32(String value, NumberStyles options, NumberFormatInfo numfmt)
+   at System.UInt16.Parse(String s, NumberStyles style, NumberFormatInfo info)
+   at System.UInt16.Parse(String s)
+   at Concurrency_P2.Program.Main(String[] args) in D:\Documents\GitHub\Concurrency-P2\Program.cs:line 24
+
+Log
+start Concurrency-P2.exe 55500 55501 55502
+start Concurrency-P2.exe 55501 55500 55502
+start Concurrency-P2.exe 55502 55500 55501 55503 55504
+start Concurrency-P2.exe 55503 55502 55505
+start Concurrency-P2.exe 55504 55502 55505
+start Concurrency-P2.exe 55505 55503 55504
+start Concurrency-P2.exe 55506 55507 55508
+start Concurrency-P2.exe 55507 55506 55508
+start Concurrency-P2.exe 55508 55506 55507 55509 55510
+start Concurrency-P2.exe 55509 55508 55511
+start Concurrency-P2.exe 55510 55508 55511
+start Concurrency-P2.exe 55511 55509 55510
+55500 > R
+55501 > R
+55502 > R
+55503 > R
+55504 > R
+55505 > R
+55506 > R
+55507 > R
+55508 > R
+55509 > R
+55510 > R
+55511 > R
+
+Process 55500:
+> R
+
+Process 55501:
+> R
+
+Process 55502:
+> R
+
+Process 55503:
+> R
+
+Process 55504:
+> R
+
+Process 55505:
+> R
+
+Process 55506:
+> R
+
+Process 55507:
+> R
+
+Process 55508:
+> R
+
+Process 55509:
+> R
+
+Process 55510:
+> R
+
+Process 55511:
 > R
 
 Microsoft Windows NT 6.2.9200.0 (x64)

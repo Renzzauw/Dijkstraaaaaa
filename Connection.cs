@@ -22,6 +22,8 @@ namespace Concurrency_P2
             Write = new StreamWriter(client.GetStream());
             Write.AutoFlush = true;
 
+            Console.Title = "Netchange " + port;
+
             // De server kan niet zien van welke poort wij client zijn, dit moeten we apart laten weten
             Write.WriteLine("Poort: " + Program.poortNummer);
 
