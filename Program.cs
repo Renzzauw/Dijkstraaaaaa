@@ -14,6 +14,8 @@ namespace CCPract2
     {
         public static int myPort;
         public static Dictionary<int, Connection> neighbours = new Dictionary<int, Connection>();
+        public static Dictionary<int, int> preferredNeighbours = new Dictionary<int, int>();
+        public static Dictionary<int, int> distanceToPort = new Dictionary<int, int>();
 
         static void Main(string[] args)
         {
@@ -38,6 +40,37 @@ namespace CCPract2
             }
         }
     }
+
+    /*class RoutingTable
+    {
+        public static Dictionary<int, int> portDistances;
+
+        public RoutingTable()
+        {
+            portDistances = new Dictionary<int, int>();
+            portDistances.Add(Program.myPort, 0);
+            GetRoutes();
+        }
+
+        public static void GetRoutes()
+        {
+            int distance = portDistances[Program.myPort];
+            foreach (int buurPoort in Program.neighbours.Keys)
+            {               
+                if (!portDistances.ContainsKey(buurPoort))
+                {
+                    portDistances.Add(buurPoort, 1 + distance);
+                    // Eigenlijk moet dit dus op de buurpoort uitgevoerd worden
+                    GetRoutes(buurPoort);
+                }
+            }
+        }
+
+        public static void UpdateRoutes(int port)
+        {
+
+        }
+    }*/
 
     class Server
     {
