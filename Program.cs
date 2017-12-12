@@ -13,7 +13,7 @@ namespace CCPract2
     class Program
     {
         public static int myPort;
-        public static Dictionary<int, List<Connection>> neighbours = new Dictionary<int, List<Connection>>();
+        public static Dictionary<int, Connection> neighbours = new Dictionary<int, Connection>();
 
         static void Main(string[] args)
         {
@@ -34,10 +34,8 @@ namespace CCPract2
         {
             if (!neighbours.ContainsKey(port))
             {
-                List<Connection> list = new List<Connection>();
-                neighbours.Add(port, list);
+                neighbours.Add(port, connection);
             }
-            neighbours[port].Add(connection);
         }
     }
 
@@ -51,6 +49,9 @@ namespace CCPract2
 
             // Start een aparte thread op die verbindingen aanneemt
             new Thread(() => AcceptLoop(server)).Start();
+
+            // Start een thread die de console input leest en afhandelt
+            new Thread(() => ConsoleInputHandler()).Start();
         }
 
         private void AcceptLoop(TcpListener handle)
@@ -69,6 +70,55 @@ namespace CCPract2
 
                 // Zet de nieuwe verbinding in de verbindingslijst
                 Program.AddConnectionToDictionary(hisPort, new Connection(clientIn, clientOut));
+            }
+        }
+
+        private void ConsoleInputHandler()
+        {
+            try
+            {
+                while (true)
+                {
+                    string input = Console.ReadLine();
+
+                    // Gebruiker vraagt om routing table
+                    if (input.StartsWith("R"))
+                    {
+                        // Print routing table
+
+                        int distance = 0;
+                        Console.WriteLine(Program.myPort + " " + distance + " local");
+                        distance++;
+                        foreach (KeyValuePair<int, Connection> kv in Program.neighbours)
+                        {
+                            Console.WriteLine(kv.Key + " " + distance + " " + kv.Key);
+                        }
+                    }
+                    else if (input.StartsWith("B"))
+                    {
+                        string[] portAndMessage = input.Split(new char[] { ' ' }, 3);
+                        int port = int.Parse(portAndMessage[1]);
+                        string message = portAndMessage[2];
+
+                        // Send Message to Port
+                    }
+                    else if (input.StartsWith("C"))
+                    {
+                        int port = int.Parse(input.Split()[1]);
+
+                        // Connect to Port
+                    }
+                    else if (input.StartsWith("D"))
+                    {
+                        int port = int.Parse(input.Split()[1]);
+
+                        // Disconnect from Port
+                    }
+                }
+            }
+            catch
+            {
+                // Verbinding is kennelijk verbroken
             }
         }
     }
@@ -120,56 +170,18 @@ namespace CCPract2
             {
                 while (true)
                 {
-                    string[] input = Read.ReadLine().Split();
-                    //Console.WriteLine(input);
+                    string input = Read.ReadLine();
 
-
-                    Console.WriteLine("Console");
-                    Write.WriteLine("Write");
-
-                    // Gebruiker vraagt om routing table
-                    if (input[0] == "R")
+                    if (input.StartsWith("RECOMPUTE"))
                     {
-                        // Print routing table
-
-                        int distance = 0;
-                        Write.WriteLine(Program.myPort + " " + distance + " local");
-                        distance++;
-                        foreach (KeyValuePair<int, List<Connection>> kv in Program.neighbours)
-                        {
-                            Write.WriteLine(kv.Key + " " + distance + " " + kv.Key);
-                        }
-                    }
-                    else if (input[0] == "B")
-                    {
-                        int port = int.Parse(input[1]);
-                        string message = "";
-                        for (int i = 2; i < input.Length - 1; i++)
-                        {
-                            message += input[2] + " ";
-                        }
-                        message += input[input.Length - 1];
-
-                        // Send Message to Port
-                    }
-                    else if (input[0] == "C")
-                    {
-                        int port = int.Parse(input[1]);
-
-                        // Connect to Port
-                    }
-                    else if (input[0] == "D")
-                    {
-                        int port = int.Parse(input[1]);
-
-                        // Disconnect from Port
+                        //Program.Recompute();
+                        Console.WriteLine("RECOMPUTING");
                     }
                 }
             }
             catch
             {
                 // Verbinding is kennelijk verbroken
-                Console.WriteLine("Verbroken: " + Program.myPort);
             }
         }
     }

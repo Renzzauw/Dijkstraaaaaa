@@ -19,21 +19,45 @@ Let op: deze berekening is niet het definitieve cijfer. Dit is alleen maar een a
 ------------------------------------
 
 Testcase;Status;Tijd;Omschrijving
-Standaard;Error;14.30;Opstarten netwerk
-Random;Error;12.06;Opstarten netwerk
+Standaard;Incorrect;16.08;Opstarten netwerk
+Random;Incorrect;4.45;Opstarten netwerk
 
 ------------------------------------
 
-1;Standaard;Error;14.30;Opstarten netwerk
+1;Standaard;Incorrect;16.08;Opstarten netwerk
 Test 1 - Standaard
 
-Process 55505 gercasht met foutmelding:
-Unhandled Exception: System.FormatException: Input string was not in a correct format.
-   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseUInt32(String value, NumberStyles options, NumberFormatInfo numfmt)
-   at System.UInt16.Parse(String s, NumberStyles style, NumberFormatInfo info)
-   at System.UInt16.Parse(String s)
-   at Concurrency_P2.Program.Main(String[] args) in D:\Documents\GitHub\Concurrency-P2\Program.cs:line 24
+Fout bij opzetten netwerk - de routing-tabel is incorrect.
+Het programma ziet de verbinding van 55500 naar 55501 niet.
+Het programma ziet de verbinding van 55500 naar 55502 niet.
+Het programma ziet de verbinding van 55500 naar 55503 niet.
+Het programma ziet de verbinding van 55500 naar 55504 niet.
+Het programma ziet de verbinding van 55500 naar 55505 niet.
+Het programma ziet de verbinding van 55501 naar 55500 niet.
+Het programma ziet de verbinding van 55501 naar 55502 niet.
+Het programma ziet de verbinding van 55501 naar 55503 niet.
+Het programma ziet de verbinding van 55501 naar 55504 niet.
+Het programma ziet de verbinding van 55501 naar 55505 niet.
+Het programma ziet de verbinding van 55502 naar 55500 niet.
+Het programma ziet de verbinding van 55502 naar 55501 niet.
+Het programma ziet de verbinding van 55502 naar 55503 niet.
+Het programma ziet de verbinding van 55502 naar 55504 niet.
+Het programma ziet de verbinding van 55502 naar 55505 niet.
+Het programma ziet de verbinding van 55503 naar 55500 niet.
+Het programma ziet de verbinding van 55503 naar 55501 niet.
+Het programma ziet de verbinding van 55503 naar 55502 niet.
+Het programma ziet de verbinding van 55503 naar 55504 niet.
+Het programma ziet de verbinding van 55503 naar 55505 niet.
+Het programma ziet de verbinding van 55504 naar 55500 niet.
+Het programma ziet de verbinding van 55504 naar 55501 niet.
+Het programma ziet de verbinding van 55504 naar 55502 niet.
+Het programma ziet de verbinding van 55504 naar 55503 niet.
+Het programma ziet de verbinding van 55504 naar 55505 niet.
+Het programma ziet de verbinding van 55505 naar 55500 niet.
+Het programma ziet de verbinding van 55505 naar 55501 niet.
+Het programma ziet de verbinding van 55505 naar 55502 niet.
+Het programma ziet de verbinding van 55505 naar 55503 niet.
+Het programma ziet de verbinding van 55505 naar 55504 niet.
 
 Log
 start Concurrency-P2.exe 55500 55501 55502
@@ -42,6 +66,20 @@ start Concurrency-P2.exe 55502 55500 55501 55503 55504
 start Concurrency-P2.exe 55503 55502 55505
 start Concurrency-P2.exe 55504 55502 55505
 start Concurrency-P2.exe 55505 55503 55504
+55501 < Verbonden: 55500
+55500 < Verbonden: 55501
+55500 < Verbonden: 55502
+55502 < Verbonden: 55503
+55502 < Verbonden: 55504
+55503 < Verbonden: 55505
+55502 < Verbonden: 55500
+55502 < Verbonden: 55501
+55501 < Verbonden: 55502
+55505 < Verbonden: 55503
+55505 < Verbonden: 55504
+55504 < Verbonden: 55505
+55503 < Verbonden: 55502
+55504 < Verbonden: 55502
 55500 > R
 55501 > R
 55502 > R
@@ -50,35 +88,41 @@ start Concurrency-P2.exe 55505 55503 55504
 55505 > R
 
 Process 55500:
+Verbonden: 55501
+Verbonden: 55502
 > R
 
 Process 55501:
+Verbonden: 55500
+Verbonden: 55502
 > R
 
 Process 55502:
+Verbonden: 55503
+Verbonden: 55504
+Verbonden: 55500
+Verbonden: 55501
 > R
 
 Process 55503:
+Verbonden: 55505
+Verbonden: 55502
 > R
 
 Process 55504:
+Verbonden: 55505
+Verbonden: 55502
 > R
 
 Process 55505:
+Verbonden: 55503
+Verbonden: 55504
 > R
 
 ------------------------------------
 
-2;Random;Error;12.06;Opstarten netwerk
+2;Random;Incorrect;4.45;Opstarten netwerk
 Test 2 - Random
-
-Process 55502 gercasht met foutmelding:
-Unhandled Exception: System.FormatException: Input string was not in a correct format.
-   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
-   at System.Number.ParseUInt32(String value, NumberStyles options, NumberFormatInfo numfmt)
-   at System.UInt16.Parse(String s, NumberStyles style, NumberFormatInfo info)
-   at System.UInt16.Parse(String s)
-   at Concurrency_P2.Program.Main(String[] args) in D:\Documents\GitHub\Concurrency-P2\Program.cs:line 24
 
 Fout bij opzetten netwerk - de routing-tabel is incorrect.
 Het programma ziet de verbinding van 55500 naar 55501 niet.
@@ -164,6 +208,27 @@ start Concurrency-P2.exe 55505 55501 55503 55506
 start Concurrency-P2.exe 55506 55500 55501 55503 55504 55505 55507
 start Concurrency-P2.exe 55507 55500 55506
 start Concurrency-P2.exe 55508 55503
+55501 < Verbonden: 55500
+55500 < Verbonden: 55501
+55500 < Verbonden: 55502
+55500 < Verbonden: 55503
+55501 < Verbonden: 55504
+55501 < Verbonden: 55505
+55500 < Verbonden: 55506
+55500 < Verbonden: 55507
+55503 < Verbonden: 55508
+55502 < Verbonden: 55500
+55502 < Verbonden: 55501
+55501 < Verbonden: 55502
+55504 < Verbonden: 55503
+55502 < Verbonden: 55504
+55503 < Verbonden: 55505
+55501 < Verbonden: 55506
+55506 < Verbonden: 55507
+55506 < Verbroken: 55506
+55505 < Verbroken: 55505
+55507 < Verbroken: 55507
+55508 < Verbroken: 55508
 55500 > R
 55501 > R
 55502 > R
@@ -175,30 +240,51 @@ start Concurrency-P2.exe 55508 55503
 55508 > R
 
 Process 55500:
+Verbonden: 55501
+Verbonden: 55502
+Verbonden: 55503
+Verbonden: 55506
+Verbonden: 55507
 > R
 
 Process 55501:
+Verbonden: 55500
+Verbonden: 55504
+Verbonden: 55505
+Verbonden: 55502
+Verbonden: 55506
 > R
 
 Process 55502:
+Verbonden: 55500
+Verbonden: 55501
+Verbonden: 55504
 > R
 
 Process 55503:
+Verbonden: 55508
+Verbonden: 55505
 > R
 
 Process 55504:
+Verbonden: 55503
 > R
 
 Process 55505:
+Verbroken: 55505
 > R
 
 Process 55506:
+Verbonden: 55507
+Verbroken: 55506
 > R
 
 Process 55507:
+Verbroken: 55507
 > R
 
 Process 55508:
+Verbroken: 55508
 > R
 
 Microsoft Windows NT 6.2.9200.0 (x64)
