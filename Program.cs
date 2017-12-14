@@ -25,6 +25,9 @@ namespace CCPract2
 
             new Server(myPort);
 
+            distanceToPort[myPort] = 0;
+            preferredNeighbours[myPort] = myPort;
+
             for (int i = 1; i < args.Length; i++)
             {
                 int port = int.Parse(args[i]);
@@ -39,16 +42,16 @@ namespace CCPract2
             if (!neighbours.ContainsKey(port))
             {
                 neighbours.Add(port, connection);
+                distanceToPort[port] = 1;
+                preferredNeighbours[port] = port;
             }
         }
 
         public static void Recompute()
         {
+            //Console.WriteLine("Recompute");
             foreach (KeyValuePair<int, Connection> neighbour in neighbours)
             {
-                distanceToPort[neighbour.Key] = 1;
-                preferredNeighbours[neighbour.Key] = neighbour.Key;
-
                 neighbour.Value.Write.WriteLine("Recompute task " + myPort);
             }
         }
@@ -103,7 +106,10 @@ namespace CCPract2
                         Console.WriteLine(Program.myPort + " 0 local");
                         foreach (KeyValuePair<int, int> kv in Program.distanceToPort)
                         {
-                            Console.WriteLine(kv.Key + " " + kv.Value + " " + Program.preferredNeighbours[kv.Key]);
+                            if (kv.Key != Program.myPort)
+                            {
+                                Console.WriteLine(kv.Key + " " + kv.Value + " " + Program.preferredNeighbours[kv.Key]);
+                            }
                         }
                     }
                     else if (input.StartsWith("B"))
@@ -187,51 +193,42 @@ namespace CCPract2
                     if (input.StartsWith("Recompute task"))
                     {
                         int port = int.Parse(input.Split()[2]);
+
                         Program.Recompute();
 
-                        string result = "Recompute result, distances (" + Program.distanceToPort.Count + "): ";
+                        string result = "Recompute result " + Program.myPort + " " + Program.distanceToPort.Count + " ";
                         foreach (KeyValuePair<int, int> distance in Program.distanceToPort)
                         {
                             result += distance.Key + " " + distance.Value + " ";
                         }
-                        result += "preferredNeighbours: ";
-                        foreach (KeyValuePair<int, int> prefN in Program.preferredNeighbours)
-                        {
-                            result += prefN.Key + " " + prefN.Value + " ";
-                        }
-                        Console.WriteLine(result);
                         Program.neighbours[port].Write.WriteLine(result);
                     }
                     else if (input.StartsWith("Recompute result"))
                     {
+                        bool changed = false;
                         string[] splittedInput = input.Split();
+                        int fromPort = int.Parse(splittedInput[2]);
                         int numberOfPorts = int.Parse(splittedInput[3]);
-
                         for (int i = 0; i < numberOfPorts * 2; i += 2)
                         {
                             int port = int.Parse(splittedInput[i + 4]);
-                            int distance = int.Parse(splittedInput[i + 5]);
+                            int distance = Math.Min(20, int.Parse(splittedInput[i + 5]) + 1);
                             if (!Program.distanceToPort.ContainsKey(port))
                             {
                                 Program.distanceToPort.Add(port, distance);
+                                Program.preferredNeighbours.Add(port, fromPort);
+                                changed = true;
                             }
                             else if (Program.distanceToPort[port] > distance)
                             {
                                 Program.distanceToPort[port] = distance;
+                                Program.preferredNeighbours[port] = fromPort;
+                                changed = true;
                             }
                         }
-                        for (int i = 0; i < numberOfPorts * 2; i += 2)
+                        if (changed)
                         {
-                            int port = int.Parse(splittedInput[i + 2 * numberOfPorts + 5]);
-                            int neighbour = int.Parse(splittedInput[i + 1 * numberOfPorts + 6]);
-                            if (!Program.preferredNeighbours.ContainsKey(port))
-                            {
-                                Program.preferredNeighbours.Add(port, neighbour);
-                            }
-                            else if (Program.preferredNeighbours[port] > neighbour)
-                            {
-                                Program.preferredNeighbours[port] = neighbour;
-                            }
+                            Program.Recompute();
                         }
                     }
                 }
