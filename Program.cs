@@ -138,7 +138,7 @@ namespace CCPract2
                         {
                             if (kv.Key == port)
                             {
-                                Program.neighbours[kv.Value].Write.WriteLine("B " + portAndMessage);
+                                Program.neighbours[kv.Value].Write.WriteLine("B " + port + " " + message);
                                 break;
                             }
                             if (Program.myPort == port)
@@ -146,6 +146,8 @@ namespace CCPract2
                                 Console.WriteLine(message);
                             }
                         }
+
+                        // TODO : error afvangen als hij poort niet kent
                     }
                     else if (input.StartsWith("C"))
                     {
@@ -261,11 +263,16 @@ namespace CCPract2
                                 changed = true;
                             }
                         }
+                        
                         // Als de waardes van de afstanden zijn geupdate, laat dit programma dan zijn routing table ook updaten
                         if (changed)
                         {
                             Program.Recompute();
                         }
+                    }
+                    else if (input.StartsWith("B"))
+                    {
+                        Console.WriteLine(input.Split()[2]);
                     }
                 }
             }
