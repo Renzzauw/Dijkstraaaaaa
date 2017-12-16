@@ -299,6 +299,8 @@ namespace CCPract2
                             Console.WriteLine("Receiver: " + receiverPort);
                             Console.WriteLine("Redirector: " + redirectorPort);
 
+                            Console.WriteLine("Bericht voor " + receiverPort + " doorgestuurd naar " + redirectorPort);
+
                             Program.neighbours[redirectorPort].Write.WriteLine("B " + receiverPort + " " + message);
                         }
                     }
