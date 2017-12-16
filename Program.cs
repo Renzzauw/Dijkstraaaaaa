@@ -133,6 +133,19 @@ namespace CCPract2
                         string message = portAndMessage[2];
 
                         // Send Message to Port
+
+                        foreach (KeyValuePair<int,int> kv in Program.preferredNeighbours)
+                        {
+                            if (kv.Key == port)
+                            {
+                                Program.neighbours[kv.Value].Write.WriteLine("B " + portAndMessage);
+                                break;
+                            }
+                            if (Program.myPort == port)
+                            {
+                                Console.WriteLine(message);
+                            }
+                        }
                     }
                     else if (input.StartsWith("C"))
                     {
