@@ -246,12 +246,18 @@ namespace CCPract2
                             {
                                 Program.distanceToPort.Add(port, distance);
                                 Program.preferredNeighbours.Add(port, fromPort);
+
+                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + fromPort);
+
                                 changed = true;
                             }
                             else if (Program.distanceToPort[port] > distance)
                             {
                                 Program.distanceToPort[port] = distance;
                                 Program.preferredNeighbours[port] = fromPort;
+
+                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + fromPort);
+
                                 changed = true;
                             }
                         }
