@@ -157,12 +157,25 @@ namespace CCPract2
                     {
                         int port = int.Parse(input.Split()[1]);
 
+                        Program.neighbours.Add(port, new Connection(port));
+                        Program.Recompute();
+
                         // Connect to Port
                     }
                     else if (input.StartsWith("D"))
                     {
                         int port = int.Parse(input.Split()[1]);
 
+                        Program.neighbours.Remove(port);
+                        // Verwijder in de preferredNeighbours dictionary ieder element met als value de port die verwijderd moet worden
+                        foreach (KeyValuePair<int,int> kv in Program.preferredNeighbours.Where(kvp => kvp.Value == port).ToList())
+                        {
+                            if (kv.Value == port)
+                            {
+                                Program.preferredNeighbours.Remove(kv.Key);
+                            }
+                        }
+                        Program.Recompute();
                         // Disconnect from Port
                     }
                 }
