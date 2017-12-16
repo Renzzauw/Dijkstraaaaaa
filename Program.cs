@@ -34,7 +34,7 @@ namespace CCPract2
                 AddConnectionToDictionary(port, new Connection(port));
             }
 
-            Recompute();
+            //Recompute();
         }
 
         public static void AddConnectionToDictionary(int port, Connection connection)
@@ -42,9 +42,11 @@ namespace CCPract2
             if (!neighbours.ContainsKey(port))
             {
                 neighbours.Add(port, connection);
+                //Recompute();
                 //distanceToPort[port] = 1;
                 //preferredNeighbours[port] = port;
             }
+            Recompute();
         }
 
         public static void Recompute()
