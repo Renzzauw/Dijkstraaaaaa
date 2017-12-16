@@ -158,6 +158,7 @@ namespace CCPract2
                         int port = int.Parse(input.Split()[1]);
 
                         Program.neighbours.Add(port, new Connection(port));
+                        Program.neighbours[port].Write.WriteLine("Connect " + Program.myPort);
                         Program.Recompute();
 
                         // Connect to Port
@@ -309,13 +310,16 @@ namespace CCPract2
                         {
                             int redirectorPort = Program.preferredNeighbours[receiverPort];
 
-                            Console.WriteLine("Receiver: " + receiverPort);
-                            Console.WriteLine("Redirector: " + redirectorPort);
-
                             Console.WriteLine("Bericht voor " + receiverPort + " doorgestuurd naar " + redirectorPort);
 
                             Program.neighbours[redirectorPort].Write.WriteLine("B " + receiverPort + " " + message);
                         }
+                    }
+                    else if (input.StartsWith("Connect"))
+                    {
+                        int port = int.Parse(input.Split()[1]);
+                        Program.neighbours.Add(port, new Connection(port));
+                        Program.Recompute();
                     }
                 }
             }
