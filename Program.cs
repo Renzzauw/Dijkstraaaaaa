@@ -189,7 +189,7 @@ namespace CCPract2
                 while (true)
                 {
                     string input = Read.ReadLine();
-
+                    // Dit programma krijgt een commando om de routingtable opnieuw uit te rekenen
                     if (input.StartsWith("Recompute task"))
                     {
                         int port = int.Parse(input.Split()[2]);
@@ -203,6 +203,7 @@ namespace CCPract2
                         }
                         Program.neighbours[port].Write.WriteLine(result);
                     }
+                    // Dit programma krijgt de routingtable binnen van een directe buurport
                     else if (input.StartsWith("Recompute result"))
                     {
                         bool changed = false;
@@ -211,6 +212,7 @@ namespace CCPract2
                         int numberOfPorts = int.Parse(splittedInput[3]);
                         for (int i = 0; i < numberOfPorts * 2; i += 2)
                         {
+                            // Sla de eerste termen over van de inputregel tot de poortnummers
                             int port = int.Parse(splittedInput[i + 4]);
                             int distance = Math.Min(20, int.Parse(splittedInput[i + 5]) + 1);
                             if (!Program.distanceToPort.ContainsKey(port))
@@ -226,6 +228,7 @@ namespace CCPract2
                                 changed = true;
                             }
                         }
+                        // Als de waardes van de afstanden zijn geupdate, laat dit programma dan zijn routing table ook updaten
                         if (changed)
                         {
                             Program.Recompute();
