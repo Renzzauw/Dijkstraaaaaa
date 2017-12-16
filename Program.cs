@@ -133,19 +133,19 @@ namespace CCPract2
                         string message = portAndMessage[2];
 
                         // Send Message to Port
+                        Program.neighbours[port].Write.WriteLine("B " + port + " " + message);
 
-                        foreach (KeyValuePair<int,int> kv in Program.preferredNeighbours)
+                        /*
+                        if (Program.preferredNeighbours[port] == port)
                         {
-                            if (kv.Key == port)
-                            {
-                                Program.neighbours[kv.Value].Write.WriteLine("B " + port + " " + message);
-                                break;
-                            }
-                            if (Program.myPort == port)
-                            {
-                                Console.WriteLine(message);
-                            }
+                            Program.neighbours[kv.Value].Write.WriteLine("B " + port + " " + message);
+                            break;
                         }
+                        if (Program.myPort == port)
+                        {
+                            Console.WriteLine(message);
+                        }
+                        */
 
                         // TODO : error afvangen als hij poort niet kent
                     }
@@ -272,7 +272,18 @@ namespace CCPract2
                     }
                     else if (input.StartsWith("B"))
                     {
-                        Console.WriteLine(input.Split()[2]);
+                        string[] splittedInput = input.Split();
+                        int receiverPort = int.Parse(splittedInput[1]);
+                        string message = splittedInput[2];
+                        if (receiverPort == Program.myPort)
+                        {
+                            Console.WriteLine(message);
+                        }
+                        else
+                        {
+                            int redirecterPort = Program.preferredNeighbours[receiverPort];
+                            Program.neighbours[redirecterPort].Write.WriteLine("B " + receiverPort + " " + message);
+                        }
                     }
                 }
             }
