@@ -133,7 +133,11 @@ namespace CCPract2
                         string message = portAndMessage[2];
 
                         // Send Message to Port
-                        Program.neighbours[port].Write.WriteLine("B " + port + " " + message);
+                        int prefN = Program.preferredNeighbours[port];
+
+                        Console.WriteLine("Bericht voor " + port + " doorgestuurd naar " + prefN);
+
+                        Program.neighbours[prefN].Write.WriteLine("B " + port + " " + message);
 
                         /*
                         if (Program.preferredNeighbours[port] == port)
@@ -280,17 +284,22 @@ namespace CCPract2
                     }
                     else if (input.StartsWith("B"))
                     {
-                        string[] splittedInput = input.Split();
+                        string[] splittedInput = input.Split(new char[] { ' ' }, 3);
                         int receiverPort = int.Parse(splittedInput[1]);
                         string message = splittedInput[2];
+
                         if (receiverPort == Program.myPort)
                         {
                             Console.WriteLine(message);
                         }
                         else
                         {
-                            int redirecterPort = Program.preferredNeighbours[receiverPort];
-                            Program.neighbours[redirecterPort].Write.WriteLine("B " + receiverPort + " " + message);
+                            int redirectorPort = Program.preferredNeighbours[receiverPort];
+
+                            Console.WriteLine("Receiver: " + receiverPort);
+                            Console.WriteLine("Redirector: " + redirectorPort);
+
+                            Program.neighbours[redirectorPort].Write.WriteLine("B " + receiverPort + " " + message);
                         }
                     }
                 }
