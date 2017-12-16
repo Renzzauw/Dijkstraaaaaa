@@ -42,8 +42,8 @@ namespace CCPract2
             if (!neighbours.ContainsKey(port))
             {
                 neighbours.Add(port, connection);
-                distanceToPort[port] = 1;
-                preferredNeighbours[port] = port;
+                //distanceToPort[port] = 1;
+                //preferredNeighbours[port] = port;
             }
         }
 
@@ -53,6 +53,18 @@ namespace CCPract2
             foreach (KeyValuePair<int, Connection> neighbour in neighbours)
             {
                 neighbour.Value.Write.WriteLine("Recompute task " + myPort);
+            }
+        }
+
+        public static void Recompute(int skipPort)
+        {
+            //Console.WriteLine("\tRecompute");
+            foreach (KeyValuePair<int, Connection> neighbour in neighbours)
+            {
+                if (neighbour.Key != skipPort)
+                {
+                    neighbour.Value.Write.WriteLine("Recompute task " + myPort);
+                }
             }
         }
     }
@@ -194,7 +206,7 @@ namespace CCPract2
                     {
                         int port = int.Parse(input.Split()[2]);
 
-                        Program.Recompute();
+                        Program.Recompute(port);
 
                         string result = "Recompute result " + Program.myPort + " " + Program.distanceToPort.Count + " ";
                         foreach (KeyValuePair<int, int> distance in Program.distanceToPort)
