@@ -244,26 +244,34 @@ namespace CCPract2
                             // Sla de eerste termen over van de inputregel tot de poortnummers
                             int port = int.Parse(splittedInput[i + 4]);
                             int distance = Math.Min(20, int.Parse(splittedInput[i + 5]) + 1);
+                            int prefN = fromPort;
+
+                            if (Program.neighbours.ContainsKey(port))
+                            {
+                                distance = 1;
+                                prefN = port;
+                            }
+
                             if (!Program.distanceToPort.ContainsKey(port))
                             {
                                 Program.distanceToPort.Add(port, distance);
-                                Program.preferredNeighbours.Add(port, fromPort);
+                                Program.preferredNeighbours.Add(port, prefN);
 
-                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + fromPort);
+                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + prefN);
 
                                 changed = true;
                             }
                             else if (Program.distanceToPort[port] > distance)
                             {
                                 Program.distanceToPort[port] = distance;
-                                Program.preferredNeighbours[port] = fromPort;
+                                Program.preferredNeighbours[port] = prefN;
 
-                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + fromPort);
+                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + prefN);
 
                                 changed = true;
                             }
                         }
-                        
+                       
                         // Als de waardes van de afstanden zijn geupdate, laat dit programma dan zijn routing table ook updaten
                         if (changed)
                         {
