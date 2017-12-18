@@ -17,12 +17,9 @@ namespace CCPract2
         public static Dictionary<int, Connection> neighbours = new Dictionary<int, Connection>();               // connecties met buren 
         public static Dictionary<int, int> preferredNeighbours = new Dictionary<int, int>();                    // key = eindbestemming en value = via welke buur het snelste is
         public static Dictionary<int, int> distanceToPort = new Dictionary<int, int>();                         // key = eindbestemming en value = afstand van huidige tot eindbestemming
-        public static Dictionary<int, Dictionary<int, int>> ndis = new Dictionary<int, Dictionary<int, int>>(); // key = neighbour en value = een dictionary met key = eindbestemming en value = afstand van de buur tot eindbestemming
-        public static Dictionary<Tuple<int, int>, int> ndis2 = new Dictionary<Tuple<int, int>, int>();
-
+        public static Dictionary<Tuple<int, int>, int> ndis = new Dictionary<Tuple<int, int>, int>();           // key = tuple van ports waartussen we de afstand willen weten, minstens een van deze poorts is een neighbour, value = afstand tussen deze twee ports
         public static HashSet<int> allNodes = new HashSet<int>();                                               // Alle bekende nodes in het netwerk
-
-        public static int maxNetworkSize = 20;                                                                  // Maximale grootte van het netwerk
+        public static int maxNetworkSize = 20;                                                                  // Maximale grootte van het netwerk op dit moment
 
         static void Main(string[] args)
         {
@@ -71,34 +68,42 @@ namespace CCPract2
         private static int GetClosestNeighbour(int port)
         {
             Console.WriteLine("GETCLOSESTNEIGHBOUR");
+            // initialize the closest distance on the size of the network and the best neighbour on -1 (undefined)
             int closest = maxNetworkSize;
             int bestNeighbour = -1;
+            // loop through the neighbours and get the distances from this neighbour to the port from the ndis
             foreach (KeyValuePair<int,Connection> kv in neighbours)
             {
-                //int distance = ndis[kv.Key][port];
-                int distance = ndis2[Tuple.Create(kv.Key, port)];
+                int distance = ndis[Tuple.Create(kv.Key, port)];
                 Console.WriteLine("Getting distance from tuple: (" + kv.Key + ", " + port + "), result: " + distance);
+                // if this distance is the smallest, update the closest and bestneighbur values
                 if (distance < closest)
                 {
                     bestNeighbour = kv.Key;
                     closest = distance;
                 }
             }
+            // return the found best neighbour
             return bestNeighbour;
         }
 
         public static void Init()
         {
-            string message = "MyDist " + myPort + " 0 " + myPort;
-
+            // loop through all the known nodes and create all combinations in the ndis dictionary with the current maxnetworksize
             for (int i = 0; i < allNodes.Count; i++)
             {
-                for (int j = i + 1; j < allNodes.Count; j++)
+                for (int j = 1; j < allNodes.Count; j++)
                 {
-                    ndis2[Tuple.Create(i, j)] = maxNetworkSize;
-                    ndis2[Tuple.Create(j, i)] = maxNetworkSize;
+                    if (j != i)
+                    {
+                        ndis[Tuple.Create(i, j)] = maxNetworkSize;
+                        ndis[Tuple.Create(j, i)] = maxNetworkSize;
+                    }
                 }
             }
+
+            // create a mydist message from this port to itself with distance 0 and send it to all the neighbours
+            string message = "MyDist " + myPort + " 0 " + myPort;
 
             foreach (KeyValuePair<int,Connection> neighbour in neighbours)
             {
@@ -125,8 +130,7 @@ namespace CCPract2
                 int bestNeighbour = GetClosestNeighbour(port);
                 Console.WriteLine("BestN: " + bestNeighbour);
                 preferredNeighbours[port] = bestNeighbour;
-                //distanceToPort[port] = ndis[bestNeighbour][port] + 1;
-                distanceToPort[port] = ndis2[Tuple.Create(bestNeighbour, port)] + 1;
+                distanceToPort[port] = ndis[Tuple.Create(bestNeighbour, port)] + 1;
             }
 
             // Als de afstand veranderd is, stuur dan een bericht naar ale buren
@@ -196,7 +200,7 @@ namespace CCPract2
                                 Console.WriteLine(kv.Key + " " + kv.Value + " " + Program.preferredNeighbours[kv.Key]);
                             }
                         }
-                        string output = "";
+                        string output = "Known nodes:";
                         foreach(int i in Program.allNodes)
                         {
                             output += " " + i;
@@ -313,11 +317,13 @@ namespace CCPract2
                     }
                     if (input.StartsWith("MyDist"))
                     {
+                        // get the toPort, distance and fromPort values from the message
                         int toPort = int.Parse(splittedInput[1]);
                         int distance = int.Parse(splittedInput[2]);
                         int fromPort = int.Parse(splittedInput[3]);
                         Console.WriteLine("MyDist ontvangen van " + fromPort + " tot " + toPort + " met afstand " + distance);
 
+                        // if the message is about a node we do not yet know, add it to the disctionaries
                         if (!Program.allNodes.Contains(toPort))
                         {
                             Console.WriteLine("Poort: " + toPort + " ken ik niet!");
@@ -326,18 +332,18 @@ namespace CCPract2
                             Program.preferredNeighbours[toPort] = -1;
                             foreach (KeyValuePair<int, Connection> n in Program.neighbours)
                             {
-                                Program.ndis2[Tuple.Create(toPort, n.Key)] = Program.maxNetworkSize;
-                                Program.ndis2[Tuple.Create(n.Key, toPort)] = Program.maxNetworkSize;
+                                Program.ndis[Tuple.Create(toPort, n.Key)] = Program.maxNetworkSize;
+                                Program.ndis[Tuple.Create(n.Key, toPort)] = Program.maxNetworkSize;
                             }
                         }
 
-                        //Program.ndis[fromPort][toPort] = distance;
-                        //Program.ndis[toPort][fromPort] = distance;
-                        Program.ndis2[Tuple.Create(fromPort, toPort)] = distance;
-                        Program.ndis2[Tuple.Create(toPort, fromPort)] = distance;
+                        // set the distance to the ndis from the toport to the fromport and the other way around
+                        Program.ndis[Tuple.Create(fromPort, toPort)] = distance;
+                        Program.ndis[Tuple.Create(toPort, fromPort)] = distance;
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + fromPort + ", " + toPort + ")");
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + toPort + ", " + fromPort + ")");
                         Console.WriteLine("hoi ik ga recompute aanroepen, groetjes");
+                        // recompute
                         Program.Recompute(toPort);
                     }
                     

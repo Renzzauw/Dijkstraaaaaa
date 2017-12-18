@@ -3,13 +3,13 @@ std-Opstarten;0;1;0;4
 std-Connect;0;0;0;1
 std-Disconnect;0;0;0;1
 std-Berichten;0;0;0;1
-std-BerichtNaVerandering;0;0;0;0,5
+std-BerichtNaVerandering;0;0;0;0.5
 std-NetwerkPartitie;0;0;0;1
-Opstarten;0;2;0;4
+Opstarten;0;0;0;4
 Connect;0;0;0;1
 Disconnect;0;0;0;1
 Berichten;0;0;0;1
-BerichtNaVerandering;0;0;0;0,5
+BerichtNaVerandering;0;0;0;0.5
 NetwerkPartitie;0;0;0;1
 BovenLimiet;0;1;0;1
 Totaal;-;-;0;(van 18)
@@ -19,383 +19,12 @@ Let op: deze berekening is niet het definitieve cijfer. Dit is alleen maar een a
 ------------------------------------
 
 Testcase;Status;Tijd;Omschrijving
-Standaard;Incorrect;16,49;Opstarten netwerk
-Random;Incorrect;18,50;Opstarten netwerk
-2xStandaard;Incorrect;9,27;Opstarten netwerk
+Standaard;Incorrect;9.28;Opstarten netwerk
 
 ------------------------------------
 
-1;Standaard;Incorrect;16,49;Opstarten netwerk
+1;Standaard;Incorrect;9.28;Opstarten netwerk
 Test 1 - Standaard
-
-Fout bij opzetten netwerk - de routing-tabel is incorrect.
-Het programma ziet de verbinding van 55500 naar 55503 niet.
-Het programma ziet de verbinding van 55500 naar 55504 niet.
-Het programma ziet de verbinding van 55500 naar 55505 niet.
-Het programma ziet de verbinding van 55501 naar 55503 niet.
-Het programma ziet de verbinding van 55501 naar 55504 niet.
-Het programma ziet de verbinding van 55501 naar 55505 niet.
-Het programma ziet de verbinding van 55502 naar 55505 niet.
-Het programma ziet de verbinding van 55503 naar 55500 niet.
-Het programma ziet de verbinding van 55503 naar 55501 niet.
-Het programma ziet de verbinding van 55503 naar 55504 niet.
-Het programma ziet de verbinding van 55504 naar 55500 niet.
-Het programma ziet de verbinding van 55504 naar 55501 niet.
-Het programma ziet de verbinding van 55504 naar 55503 niet.
-Het programma ziet de verbinding van 55505 naar 55500 niet.
-Het programma ziet de verbinding van 55505 naar 55501 niet.
-Het programma ziet de verbinding van 55505 naar 55502 niet.
-
-Log
-start Concurrency-P2.exe 55500 55501 55502
-start Concurrency-P2.exe 55501 55500 55502
-start Concurrency-P2.exe 55502 55500 55501 55503 55504
-start Concurrency-P2.exe 55503 55502 55505
-start Concurrency-P2.exe 55504 55502 55505
-start Concurrency-P2.exe 55505 55503 55504
-55501 < Verbonden: 55500
-55500 < Verbonden: 55501
-55500 < Verbonden: 55502
-55502 < Verbonden: 55503
-55503 < Verbonden: 55505
-55502 < Verbonden: 55504
-55502 < Verbonden: 55500
-55502 < Verbonden: 55501
-55501 < Verbonden: 55502
-55505 < Verbonden: 55503
-55504 < Verbonden: 55505
-55505 < Verbonden: 55504
-55503 < Verbonden: 55502
-55504 < Verbonden: 55502
-55500 > R
-55501 > R
-55502 > R
-55503 > R
-55504 > R
-55505 > R
-55500 < 55500 0 local
-55502 < 55502 0 local
-55503 < 55503 0 local
-55504 < 55504 0 local
-55501 < 55501 0 local
-55505 < 55505 0 local
-55500 < 55501 1 55501
-55502 < 55500 1 55500
-55503 < 55502 1 55502
-55504 < 55502 1 55502
-55501 < 55500 1 55500
-55505 < 55503 1 55503
-55500 < 55502 1 55502
-55502 < 55503 1 55503
-55503 < 55505 1 55505
-55504 < 55505 1 55505
-55501 < 55502 1 55502
-55505 < 55504 1 55504
-55502 < 55504 1 55504
-55502 < 55501 1 55501
-
-Process 55500:
-Verbonden: 55501
-Verbonden: 55502
-> R
-55500 0 local
-55501 1 55501
-55502 1 55502
-
-Process 55501:
-Verbonden: 55500
-Verbonden: 55502
-> R
-55501 0 local
-55500 1 55500
-55502 1 55502
-
-Process 55502:
-Verbonden: 55503
-Verbonden: 55504
-Verbonden: 55500
-Verbonden: 55501
-> R
-55502 0 local
-55500 1 55500
-55503 1 55503
-55504 1 55504
-55501 1 55501
-
-Process 55503:
-Verbonden: 55505
-Verbonden: 55502
-> R
-55503 0 local
-55502 1 55502
-55505 1 55505
-
-Process 55504:
-Verbonden: 55505
-Verbonden: 55502
-> R
-55504 0 local
-55502 1 55502
-55505 1 55505
-
-Process 55505:
-Verbonden: 55503
-Verbonden: 55504
-> R
-55505 0 local
-55503 1 55503
-55504 1 55504
-
-------------------------------------
-
-2;Random;Incorrect;18,50;Opstarten netwerk
-Test 2 - Random
-
-Fout bij opzetten netwerk - de routing-tabel is incorrect.
-Het programma ziet de verbinding van 55500 naar 55504 niet.
-Het programma ziet de verbinding van 55500 naar 55505 niet.
-Het programma ziet de verbinding van 55500 naar 55508 niet.
-Het programma ziet de verbinding van 55501 naar 55503 niet.
-Het programma ziet de verbinding van 55501 naar 55507 niet.
-Het programma ziet de verbinding van 55501 naar 55508 niet.
-Het programma ziet de verbinding van 55502 naar 55503 niet.
-Het programma ziet de verbinding van 55502 naar 55505 niet.
-Het programma ziet de verbinding van 55502 naar 55506 niet.
-Het programma ziet de verbinding van 55502 naar 55507 niet.
-Het programma ziet de verbinding van 55502 naar 55508 niet.
-Het programma ziet de verbinding van 55503 naar 55501 niet.
-Het programma ziet de verbinding van 55503 naar 55502 niet.
-Het programma ziet de verbinding van 55503 naar 55507 niet.
-Het programma ziet de verbinding van 55504 naar 55500 niet.
-Het programma ziet de verbinding van 55504 naar 55505 niet.
-Het programma ziet de verbinding van 55504 naar 55507 niet.
-Het programma ziet de verbinding van 55504 naar 55508 niet.
-Het programma ziet de verbinding van 55505 naar 55500 niet.
-Het programma ziet de verbinding van 55505 naar 55502 niet.
-Het programma ziet de verbinding van 55505 naar 55504 niet.
-Het programma ziet de verbinding van 55505 naar 55507 niet.
-Het programma ziet de verbinding van 55505 naar 55508 niet.
-Het programma ziet de verbinding van 55506 naar 55502 niet.
-Het programma ziet de verbinding van 55506 naar 55508 niet.
-Het programma ziet de verbinding van 55507 naar 55501 niet.
-Het programma ziet de verbinding van 55507 naar 55502 niet.
-Het programma ziet de verbinding van 55507 naar 55503 niet.
-Het programma ziet de verbinding van 55507 naar 55504 niet.
-Het programma ziet de verbinding van 55507 naar 55505 niet.
-Het programma ziet de verbinding van 55507 naar 55508 niet.
-Het programma ziet de verbinding van 55508 naar 55500 niet.
-Het programma ziet de verbinding van 55508 naar 55501 niet.
-Het programma ziet de verbinding van 55508 naar 55502 niet.
-Het programma ziet de verbinding van 55508 naar 55504 niet.
-Het programma ziet de verbinding van 55508 naar 55505 niet.
-Het programma ziet de verbinding van 55508 naar 55506 niet.
-Het programma ziet de verbinding van 55508 naar 55507 niet.
-
-Log
-start Concurrency-P2.exe 55500 55501 55502 55503 55506 55507
-start Concurrency-P2.exe 55501 55500 55502 55504 55505 55506
-start Concurrency-P2.exe 55502 55500 55501 55504
-start Concurrency-P2.exe 55503 55500 55504 55505 55506 55508
-start Concurrency-P2.exe 55504 55501 55502 55503 55506
-start Concurrency-P2.exe 55505 55501 55503 55506
-start Concurrency-P2.exe 55506 55500 55501 55503 55504 55505 55507
-start Concurrency-P2.exe 55507 55500 55506
-start Concurrency-P2.exe 55508 55503
-55500 < Verbonden: 55501
-55501 < Verbonden: 55500
-55500 < Verbonden: 55502
-55501 < Verbonden: 55504
-55500 < Verbonden: 55506
-55500 < Verbonden: 55503
-55501 < Verbonden: 55505
-55500 < Verbonden: 55507
-55503 < Verbonden: 55508
-55502 < Verbonden: 55501
-55502 < Verbonden: 55500
-55501 < Verbonden: 55502
-55502 < Verbonden: 55504
-55501 < Verbonden: 55506
-55504 < Verbonden: 55503
-55503 < Verbonden: 55505
-55506 < Verbonden: 55507
-55504 < Verbonden: 55501
-55503 < Verbonden: 55500
-55504 < Verbonden: 55502
-55503 < Verbonden: 55506
-55503 < Verbonden: 55504
-55505 < Verbonden: 55503
-55506 < Verbonden: 55505
-55505 < Verbonden: 55501
-55506 < Verbonden: 55500
-55506 < Verbonden: 55504
-55506 < Verbonden: 55503
-55504 < Verbonden: 55506
-55506 < Verbonden: 55501
-55507 < Verbonden: 55500
-55508 < Verbonden: 55503
-55505 < Verbonden: 55506
-55507 < Verbonden: 55506
-55500 > R
-55501 > R
-55502 > R
-55503 > R
-55504 > R
-55505 > R
-55506 > R
-55507 > R
-55508 > R
-55500 < 55500 0 local
-55503 < 55503 0 local
-55502 < 55502 0 local
-55504 < 55504 0 local
-55501 < 55501 0 local
-55502 < 55500 1 55500
-55504 < 55501 1 55501
-55500 < 55501 1 55501
-55503 < 55500 1 55500
-55507 < 55507 0 local
-55506 < 55506 0 local
-55505 < 55505 0 local
-55508 < 55508 0 local
-55501 < 55500 1 55500
-55502 < 55501 1 55501
-55504 < 55502 1 55502
-55500 < 55502 1 55502
-55503 < 55508 1 55508
-55507 < 55500 1 55500
-55506 < 55500 1 55500
-55505 < 55501 1 55501
-55508 < 55503 1 55503
-55501 < 55504 1 55504
-55502 < 55504 1 55504
-55504 < 55503 1 55503
-55500 < 55506 1 55506
-55503 < 55504 1 55504
-55507 < 55506 1 55506
-55506 < 55501 1 55501
-55505 < 55503 1 55503
-55501 < 55505 1 55505
-55504 < 55506 1 55506
-55500 < 55503 1 55503
-55503 < 55505 1 55505
-55506 < 55507 1 55507
-55505 < 55506 1 55506
-55501 < 55502 1 55502
-55500 < 55507 1 55507
-55503 < 55506 1 55506
-55506 < 55503 1 55503
-55501 < 55506 1 55506
-55506 < 55505 1 55505
-55506 < 55504 1 55504
-
-Process 55500:
-Verbonden: 55501
-Verbonden: 55502
-Verbonden: 55506
-Verbonden: 55503
-Verbonden: 55507
-> R
-55500 0 local
-55501 1 55501
-55502 1 55502
-55506 1 55506
-55503 1 55503
-55507 1 55507
-
-Process 55501:
-Verbonden: 55500
-Verbonden: 55504
-Verbonden: 55505
-Verbonden: 55502
-Verbonden: 55506
-> R
-55501 0 local
-55500 1 55500
-55504 1 55504
-55505 1 55505
-55502 1 55502
-55506 1 55506
-
-Process 55502:
-Verbonden: 55501
-Verbonden: 55500
-Verbonden: 55504
-> R
-55502 0 local
-55500 1 55500
-55501 1 55501
-55504 1 55504
-
-Process 55503:
-Verbonden: 55508
-Verbonden: 55505
-Verbonden: 55500
-Verbonden: 55506
-Verbonden: 55504
-> R
-55503 0 local
-55500 1 55500
-55508 1 55508
-55504 1 55504
-55505 1 55505
-55506 1 55506
-
-Process 55504:
-Verbonden: 55503
-Verbonden: 55501
-Verbonden: 55502
-Verbonden: 55506
-> R
-55504 0 local
-55501 1 55501
-55502 1 55502
-55503 1 55503
-55506 1 55506
-
-Process 55505:
-Verbonden: 55503
-Verbonden: 55501
-Verbonden: 55506
-> R
-55505 0 local
-55501 1 55501
-55503 1 55503
-55506 1 55506
-
-Process 55506:
-Verbonden: 55507
-Verbonden: 55505
-Verbonden: 55500
-Verbonden: 55504
-Verbonden: 55503
-Verbonden: 55501
-> R
-55506 0 local
-55500 1 55500
-55501 1 55501
-55507 1 55507
-55503 1 55503
-55505 1 55505
-55504 1 55504
-
-Process 55507:
-Verbonden: 55500
-Verbonden: 55506
-> R
-55507 0 local
-55500 1 55500
-55506 1 55506
-
-Process 55508:
-Verbonden: 55503
-> R
-55508 0 local
-55503 1 55503
-
-------------------------------------
-
-3;2xStandaard;Incorrect;9,27;Opstarten netwerk
-Test 3 - 2xStandaard
 
 Fout bij opzetten netwerk - de routing-tabel is incorrect.
 Het programma ziet de verbinding van 55500 naar 55501 niet.
@@ -428,36 +57,6 @@ Het programma ziet de verbinding van 55505 naar 55501 niet.
 Het programma ziet de verbinding van 55505 naar 55502 niet.
 Het programma ziet de verbinding van 55505 naar 55503 niet.
 Het programma ziet de verbinding van 55505 naar 55504 niet.
-Het programma ziet de verbinding van 55506 naar 55507 niet.
-Het programma ziet de verbinding van 55506 naar 55508 niet.
-Het programma ziet de verbinding van 55506 naar 55509 niet.
-Het programma ziet de verbinding van 55506 naar 55510 niet.
-Het programma ziet de verbinding van 55506 naar 55511 niet.
-Het programma ziet de verbinding van 55507 naar 55506 niet.
-Het programma ziet de verbinding van 55507 naar 55508 niet.
-Het programma ziet de verbinding van 55507 naar 55509 niet.
-Het programma ziet de verbinding van 55507 naar 55510 niet.
-Het programma ziet de verbinding van 55507 naar 55511 niet.
-Het programma ziet de verbinding van 55508 naar 55506 niet.
-Het programma ziet de verbinding van 55508 naar 55507 niet.
-Het programma ziet de verbinding van 55508 naar 55509 niet.
-Het programma ziet de verbinding van 55508 naar 55510 niet.
-Het programma ziet de verbinding van 55508 naar 55511 niet.
-Het programma ziet de verbinding van 55509 naar 55506 niet.
-Het programma ziet de verbinding van 55509 naar 55507 niet.
-Het programma ziet de verbinding van 55509 naar 55508 niet.
-Het programma ziet de verbinding van 55509 naar 55510 niet.
-Het programma ziet de verbinding van 55509 naar 55511 niet.
-Het programma ziet de verbinding van 55510 naar 55506 niet.
-Het programma ziet de verbinding van 55510 naar 55507 niet.
-Het programma ziet de verbinding van 55510 naar 55508 niet.
-Het programma ziet de verbinding van 55510 naar 55509 niet.
-Het programma ziet de verbinding van 55510 naar 55511 niet.
-Het programma ziet de verbinding van 55511 naar 55506 niet.
-Het programma ziet de verbinding van 55511 naar 55507 niet.
-Het programma ziet de verbinding van 55511 naar 55508 niet.
-Het programma ziet de verbinding van 55511 naar 55509 niet.
-Het programma ziet de verbinding van 55511 naar 55510 niet.
 
 Log
 start Concurrency-P2.exe 55500 55501 55502
@@ -466,115 +65,241 @@ start Concurrency-P2.exe 55502 55500 55501 55503 55504
 start Concurrency-P2.exe 55503 55502 55505
 start Concurrency-P2.exe 55504 55502 55505
 start Concurrency-P2.exe 55505 55503 55504
-start Concurrency-P2.exe 55506 55507 55508
-start Concurrency-P2.exe 55507 55506 55508
-start Concurrency-P2.exe 55508 55506 55507 55509 55510
-start Concurrency-P2.exe 55509 55508 55511
-start Concurrency-P2.exe 55510 55508 55511
-start Concurrency-P2.exe 55511 55509 55510
 55501 < Verbonden: 55500
 55500 < Verbonden: 55501
 55500 < Verbonden: 55502
 55502 < Verbonden: 55503
 55502 < Verbonden: 55504
 55503 < Verbonden: 55505
-55507 < Verbonden: 55506
-55506 < Verbonden: 55508
-55506 < Verbonden: 55507
-55509 < Verbonden: 55511
-55508 < Verbonden: 55509
-55508 < Verbonden: 55510
 55502 < Verbonden: 55500
+55502 < MyDist ontvangen van 55500 tot 55500 met afstand 0
+55501 < MyDist ontvangen van 55500 tot 55500 met afstand 0
+55501 < Setting distance 0 to tuple (55500, 55500)
+55502 < Setting distance 0 to tuple (55500, 55500)
+55501 < Setting distance 0 to tuple (55500, 55500)
+55502 < Setting distance 0 to tuple (55500, 55500)
+55501 < hoi ik ga recompute aanroepen, groetjes
+55502 < hoi ik ga recompute aanroepen, groetjes
+55502 < RECOMPUTE YAAAAY
+55501 < RECOMPUTE YAAAAY
+55501 < GETCLOSESTNEIGHBOUR
+55501 < Getting distance from tuple: (55500, 55500), result: 0
+55502 < GETCLOSESTNEIGHBOUR
+55501 < BestN: 55500
+55502 < Getting distance from tuple: (55500, 55500), result: 0
 55502 < Verbonden: 55501
+55500 < MyDist ontvangen van 55501 tot 55501 met afstand 0
+55502 < MyDist ontvangen van 55501 tot 55501 met afstand 0
+55500 < Setting distance 0 to tuple (55501, 55501)
+55502 < Setting distance 0 to tuple (55501, 55501)
+55500 < Setting distance 0 to tuple (55501, 55501)
+55502 < Setting distance 0 to tuple (55501, 55501)
+55500 < hoi ik ga recompute aanroepen, groetjes
+55502 < hoi ik ga recompute aanroepen, groetjes
+55502 < RECOMPUTE YAAAAY
+55502 < GETCLOSESTNEIGHBOUR
+55500 < RECOMPUTE YAAAAY
+55500 < GETCLOSESTNEIGHBOUR
+55500 < Getting distance from tuple: (55501, 55501), result: 0
 55501 < Verbonden: 55502
 55505 < Verbonden: 55503
+55502 < MyDist ontvangen van 55503 tot 55503 met afstand 0
+55505 < MyDist ontvangen van 55503 tot 55503 met afstand 0
+55502 < Setting distance 0 to tuple (55503, 55503)
+55502 < Setting distance 0 to tuple (55503, 55503)
+55505 < Setting distance 0 to tuple (55503, 55503)
+55502 < hoi ik ga recompute aanroepen, groetjes
+55505 < Setting distance 0 to tuple (55503, 55503)
+55502 < RECOMPUTE YAAAAY
+55505 < hoi ik ga recompute aanroepen, groetjes
+55502 < GETCLOSESTNEIGHBOUR
+55505 < RECOMPUTE YAAAAY
+55505 < GETCLOSESTNEIGHBOUR
+55505 < Getting distance from tuple: (55503, 55503), result: 0
+55505 < BestN: 55503
 55505 < Verbonden: 55504
+55502 < MyDist ontvangen van 55504 tot 55504 met afstand 0
+55505 < MyDist ontvangen van 55504 tot 55504 met afstand 0
+55502 < Setting distance 0 to tuple (55504, 55504)
+55505 < Setting distance 0 to tuple (55504, 55504)
+55502 < Setting distance 0 to tuple (55504, 55504)
+55505 < Setting distance 0 to tuple (55504, 55504)
+55502 < hoi ik ga recompute aanroepen, groetjes
+55502 < RECOMPUTE YAAAAY
+55505 < hoi ik ga recompute aanroepen, groetjes
+55502 < GETCLOSESTNEIGHBOUR
+55505 < RECOMPUTE YAAAAY
+55505 < GETCLOSESTNEIGHBOUR
 55504 < Verbonden: 55505
-55508 < Verbonden: 55506
-55507 < Verbonden: 55508
-55508 < Verbonden: 55507
-55511 < Verbonden: 55509
-55510 < Verbonden: 55511
-55511 < Verbonden: 55510
+55503 < MyDist ontvangen van 55505 tot 55505 met afstand 0
+55504 < MyDist ontvangen van 55505 tot 55505 met afstand 0
+55503 < Setting distance 0 to tuple (55505, 55505)
+55504 < Setting distance 0 to tuple (55505, 55505)
+55503 < Setting distance 0 to tuple (55505, 55505)
+55504 < Setting distance 0 to tuple (55505, 55505)
+55503 < hoi ik ga recompute aanroepen, groetjes
+55504 < hoi ik ga recompute aanroepen, groetjes
+55504 < RECOMPUTE YAAAAY
+55503 < RECOMPUTE YAAAAY
+55503 < GETCLOSESTNEIGHBOUR
+55504 < GETCLOSESTNEIGHBOUR
 55503 < Verbonden: 55502
-55509 < Verbonden: 55508
 55504 < Verbonden: 55502
-55510 < Verbonden: 55508
+55503 < MyDist ontvangen van 55502 tot 55502 met afstand 0
+55500 < MyDist ontvangen van 55502 tot 55502 met afstand 0
+55504 < MyDist ontvangen van 55502 tot 55502 met afstand 0
+55503 < Setting distance 0 to tuple (55502, 55502)
+55504 < Setting distance 0 to tuple (55502, 55502)
+55500 < Setting distance 0 to tuple (55502, 55502)
+55501 < MyDist ontvangen van 55502 tot 55502 met afstand 0
+55503 < Setting distance 0 to tuple (55502, 55502)
+55504 < Setting distance 0 to tuple (55502, 55502)
+55500 < Setting distance 0 to tuple (55502, 55502)
+55503 < hoi ik ga recompute aanroepen, groetjes
+55504 < hoi ik ga recompute aanroepen, groetjes
+55503 < RECOMPUTE YAAAAY
+55500 < hoi ik ga recompute aanroepen, groetjes
+55504 < RECOMPUTE YAAAAY
+55503 < GETCLOSESTNEIGHBOUR
+55500 < RECOMPUTE YAAAAY
+55504 < GETCLOSESTNEIGHBOUR
+55503 < Getting distance from tuple: (55502, 55502), result: 0
+55501 < Setting distance 0 to tuple (55502, 55502)
+55504 < Getting distance from tuple: (55502, 55502), result: 0
+55500 < GETCLOSESTNEIGHBOUR
+55501 < Setting distance 0 to tuple (55502, 55502)
+55501 < hoi ik ga recompute aanroepen, groetjes
+55501 < RECOMPUTE YAAAAY
+55501 < GETCLOSESTNEIGHBOUR
 55500 > R
 55501 > R
 55502 > R
 55503 > R
 55504 > R
 55505 > R
-55506 > R
-55507 > R
-55508 > R
-55509 > R
-55510 > R
-55511 > R
 
 Process 55500:
 Verbonden: 55501
 Verbonden: 55502
+MyDist ontvangen van 55501 tot 55501 met afstand 0
+Setting distance 0 to tuple (55501, 55501)
+Setting distance 0 to tuple (55501, 55501)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55501, 55501), result: 0
+MyDist ontvangen van 55502 tot 55502 met afstand 0
+Setting distance 0 to tuple (55502, 55502)
+Setting distance 0 to tuple (55502, 55502)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
 > R
 
 Process 55501:
 Verbonden: 55500
+MyDist ontvangen van 55500 tot 55500 met afstand 0
+Setting distance 0 to tuple (55500, 55500)
+Setting distance 0 to tuple (55500, 55500)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55500, 55500), result: 0
+BestN: 55500
 Verbonden: 55502
+MyDist ontvangen van 55502 tot 55502 met afstand 0
+Setting distance 0 to tuple (55502, 55502)
+Setting distance 0 to tuple (55502, 55502)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
 > R
 
 Process 55502:
 Verbonden: 55503
 Verbonden: 55504
 Verbonden: 55500
+MyDist ontvangen van 55500 tot 55500 met afstand 0
+Setting distance 0 to tuple (55500, 55500)
+Setting distance 0 to tuple (55500, 55500)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55500, 55500), result: 0
 Verbonden: 55501
+MyDist ontvangen van 55501 tot 55501 met afstand 0
+Setting distance 0 to tuple (55501, 55501)
+Setting distance 0 to tuple (55501, 55501)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+MyDist ontvangen van 55503 tot 55503 met afstand 0
+Setting distance 0 to tuple (55503, 55503)
+Setting distance 0 to tuple (55503, 55503)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+MyDist ontvangen van 55504 tot 55504 met afstand 0
+Setting distance 0 to tuple (55504, 55504)
+Setting distance 0 to tuple (55504, 55504)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
 > R
 
 Process 55503:
 Verbonden: 55505
+MyDist ontvangen van 55505 tot 55505 met afstand 0
+Setting distance 0 to tuple (55505, 55505)
+Setting distance 0 to tuple (55505, 55505)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
 Verbonden: 55502
+MyDist ontvangen van 55502 tot 55502 met afstand 0
+Setting distance 0 to tuple (55502, 55502)
+Setting distance 0 to tuple (55502, 55502)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55502, 55502), result: 0
 > R
 
 Process 55504:
 Verbonden: 55505
+MyDist ontvangen van 55505 tot 55505 met afstand 0
+Setting distance 0 to tuple (55505, 55505)
+Setting distance 0 to tuple (55505, 55505)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
 Verbonden: 55502
+MyDist ontvangen van 55502 tot 55502 met afstand 0
+Setting distance 0 to tuple (55502, 55502)
+Setting distance 0 to tuple (55502, 55502)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55502, 55502), result: 0
 > R
 
 Process 55505:
 Verbonden: 55503
+MyDist ontvangen van 55503 tot 55503 met afstand 0
+Setting distance 0 to tuple (55503, 55503)
+Setting distance 0 to tuple (55503, 55503)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55503, 55503), result: 0
+BestN: 55503
 Verbonden: 55504
-> R
-
-Process 55506:
-Verbonden: 55508
-Verbonden: 55507
-> R
-
-Process 55507:
-Verbonden: 55506
-Verbonden: 55508
-> R
-
-Process 55508:
-Verbonden: 55509
-Verbonden: 55510
-Verbonden: 55506
-Verbonden: 55507
-> R
-
-Process 55509:
-Verbonden: 55511
-Verbonden: 55508
-> R
-
-Process 55510:
-Verbonden: 55511
-Verbonden: 55508
-> R
-
-Process 55511:
-Verbonden: 55509
-Verbonden: 55510
+MyDist ontvangen van 55504 tot 55504 met afstand 0
+Setting distance 0 to tuple (55504, 55504)
+Setting distance 0 to tuple (55504, 55504)
+hoi ik ga recompute aanroepen, groetjes
+RECOMPUTE YAAAAY
+GETCLOSESTNEIGHBOUR
 > R
 
 Microsoft Windows NT 6.2.9200.0 (x64)
