@@ -12,60 +12,144 @@ namespace CCPract2
 {
     class Program
     {
-        public static int myPort;
-        public static Dictionary<int, Connection> neighbours = new Dictionary<int, Connection>();
-        public static Dictionary<int, int> preferredNeighbours = new Dictionary<int, int>();
-        public static Dictionary<int, int> distanceToPort = new Dictionary<int, int>();
+
+        public static int myPort;                                                                               // port number
+        public static Dictionary<int, Connection> neighbours = new Dictionary<int, Connection>();               // connecties met buren 
+        public static Dictionary<int, int> preferredNeighbours = new Dictionary<int, int>();                    // key = eindbestemming en value = via welke buur het snelste is
+        public static Dictionary<int, int> distanceToPort = new Dictionary<int, int>();                         // key = eindbestemming en value = afstand van huidige tot eindbestemming
+        public static Dictionary<int, Dictionary<int, int>> ndis = new Dictionary<int, Dictionary<int, int>>(); // key = neighbour en value = een dictionary met key = eindbestemming en value = afstand van de buur tot eindbestemming
+        public static Dictionary<Tuple<int, int>, int> ndis2 = new Dictionary<Tuple<int, int>, int>();
+
+        public static HashSet<int> allNodes = new HashSet<int>();                                               // Alle bekende nodes in het netwerk
+
+        public static int maxNetworkSize = 20;                                                                  // Maximale grootte van het netwerk
 
         static void Main(string[] args)
         {
+            // haalt het poortnummer op van de huidige port
             myPort = int.Parse(args[0]);
-
+            // Geef console het poortnummer als titel
             Console.Title = "NetChange " + myPort;
-
+            // maak een nieuwe server aan van de huidige port
             new Server(myPort);
-
+            // zet de afstand naar de huidige poort op 0
             distanceToPort[myPort] = 0;
+            // zet de huidige port als beste buur als de eindbestemming de huidige poort is
             preferredNeighbours[myPort] = myPort;
-
+            // Voeg de huidige port toe aan de lijst van nodes
+            allNodes.Add(myPort);
+            // maak connecties aan met directe buren
             for (int i = 1; i < args.Length; i++)
             {
+                // haal portnummer op
                 int port = int.Parse(args[i]);
+                // voeg hem toe aan de dictionary van de buren
                 AddConnectionToDictionary(port, new Connection(port));
+                // voeg de port toe aan de lijst van nodes die bekend zijn
+                //allNodes.Add(port);
+                // zet de afstand op 1 omdat hij een directe buur is
+                //distanceToPort[port] = 1;
+                // zet de preferred neighbour op zichzelf
+                //preferredNeighbours[port] = port;
             }
-
-            //Recompute();
+            Init();
         }
 
+        // voeg een port toe aan de burendictionary als deze nog niet bestaat
         public static void AddConnectionToDictionary(int port, Connection connection)
         {
-            if (!neighbours.ContainsKey(port))
+            if (!neighbours.ContainsKey(port)) // TODO : let op duplicate code
             {
                 neighbours.Add(port, connection);
-                //Recompute();
+                //allNodes.Add(port);
                 //distanceToPort[port] = 1;
                 //preferredNeighbours[port] = port;
             }
-            Recompute();
         }
 
-        public static void Recompute()
+        // methode voor het verkrijgen van de beste buur bij een gegeven eindbestemming
+        private static int GetClosestNeighbour(int port)
         {
-            //Console.WriteLine("Recompute");
-            foreach (KeyValuePair<int, Connection> neighbour in neighbours)
+            Console.WriteLine("GETCLOSESTNEIGHBOUR");
+            int closest = maxNetworkSize;
+            int bestNeighbour = -1;
+            foreach (KeyValuePair<int,Connection> kv in neighbours)
             {
-                neighbour.Value.Write.WriteLine("Recompute task " + myPort);
+                //int distance = ndis[kv.Key][port];
+                Console.WriteLine("VOOR NDIS");
+                int distance = ndis2[Tuple.Create(kv.Key, port)];
+                Console.WriteLine("NA NDIS");
+                if (distance < closest)
+                {
+                    bestNeighbour = kv.Key;
+                    closest = distance;
+                }
+            }
+            return bestNeighbour;
+        }
+
+        public static void Init()
+        {
+            string message = "MyDist " + myPort + " 0 " + myPort;
+
+            for (int i = 0; i < allNodes.Count; i++)
+            {
+                for (int j = i + 1; j < allNodes.Count; j++)
+                {
+                    ndis2[Tuple.Create(i, j)] = maxNetworkSize;
+                    ndis2[Tuple.Create(j, i)] = maxNetworkSize;
+                }
+            }
+
+            foreach (KeyValuePair<int,Connection> neighbour in neighbours)
+            {
+                neighbour.Value.Write.WriteLine(message);
             }
         }
 
-        public static void Recompute(int skipPort)
+        // herberekent afstanden van het netwerk
+        public static void Recompute(int port)
         {
-            //Console.WriteLine("\tRecompute");
-            foreach (KeyValuePair<int, Connection> neighbour in neighbours)
+            Console.WriteLine("RECOMPUTE YAAAAY");
+            if (!allNodes.Contains(port))
             {
-                if (neighbour.Key != skipPort)
+                Console.WriteLine("Poort: " + port + " ken ik niet!");
+                allNodes.Add(port);
+                distanceToPort[port] = maxNetworkSize;
+                preferredNeighbours[port] = -1;
+                foreach (KeyValuePair<int, Connection> n in neighbours)
                 {
-                    neighbour.Value.Write.WriteLine("Recompute task " + myPort);
+                    ndis2[Tuple.Create(port, n.Key)] = maxNetworkSize;
+                    ndis2[Tuple.Create(n.Key, port)] = maxNetworkSize;
+                }
+            }
+
+            int oldDistance = distanceToPort[port];
+            
+            // checkt of de meegegeven port de huidige port is en zet daarvan de afstand op 0
+            if (port == myPort)
+            {
+                distanceToPort[port] = 0;
+                preferredNeighbours[port] = port;
+            }
+            // bereken de afstand en tel daar 1 bij op
+            else
+            {
+                int bestNeighbour = GetClosestNeighbour(port);
+                Console.WriteLine("BestN: " + bestNeighbour);
+                preferredNeighbours[port] = bestNeighbour;
+                //distanceToPort[port] = ndis[bestNeighbour][port] + 1;
+                distanceToPort[port] = ndis2[Tuple.Create(bestNeighbour, port)] + 1;
+            }
+
+            // Als de afstand veranderd is, stuur dan een bericht naar ale buren
+            if (distanceToPort[port] != oldDistance)
+            {
+                string message = "MyDist " + port + " " + distanceToPort[port] + " " + myPort;
+
+                foreach (KeyValuePair<int,Connection> neighbour in neighbours)
+                {
+                    neighbour.Value.Write.WriteLine(message);
                 }
             }
         }
@@ -125,9 +209,16 @@ namespace CCPract2
                                 Console.WriteLine(kv.Key + " " + kv.Value + " " + Program.preferredNeighbours[kv.Key]);
                             }
                         }
+                        string output = "";
+                        foreach(int i in Program.allNodes)
+                        {
+                            output += " " + i;
+                        }
+                        Console.WriteLine(output);
                     }
                     else if (input.StartsWith("B"))
                     {
+                        /*
                         string[] portAndMessage = input.Split(new char[] { ' ' }, 3);
                         int port = int.Parse(portAndMessage[1]);
                         string message = portAndMessage[2];
@@ -138,33 +229,23 @@ namespace CCPract2
                         Console.WriteLine("Bericht voor " + port + " doorgestuurd naar " + prefN);
 
                         Program.neighbours[prefN].Write.WriteLine("B " + port + " " + message);
-
-                        /*
-                        if (Program.preferredNeighbours[port] == port)
-                        {
-                            Program.neighbours[kv.Value].Write.WriteLine("B " + port + " " + message);
-                            break;
-                        }
-                        if (Program.myPort == port)
-                        {
-                            Console.WriteLine(message);
-                        }
                         */
-
                         // TODO : error afvangen als hij poort niet kent
                     }
                     else if (input.StartsWith("C"))
                     {
+                        /*
                         int port = int.Parse(input.Split()[1]);
 
                         Program.neighbours.Add(port, new Connection(port));
                         Program.neighbours[port].Write.WriteLine("Connect " + Program.myPort);
                         Program.Recompute();
-
+                        */
                         // Connect to Port
                     }
                     else if (input.StartsWith("D"))
                     {
+                        /*
                         int port = int.Parse(input.Split()[1]);
 
                         Program.neighbours.Remove(port);
@@ -178,6 +259,7 @@ namespace CCPract2
                         }
                         Program.Recompute();
                         // Disconnect from Port
+                        */
                     }
                 }
             }
@@ -236,91 +318,27 @@ namespace CCPract2
                 while (true)
                 {
                     string input = Read.ReadLine();
-                    // Dit programma krijgt een commando om de routingtable opnieuw uit te rekenen
-                    if (input.StartsWith("Recompute task"))
+                    string[] splittedInput = input.Split();
+                    // Als A verbindt met B, voegt B ook nog A toe aan zijn dictionaries
+                    if (input.StartsWith("Poort"))
                     {
-                        int port = int.Parse(input.Split()[2]);
-
-                        Program.Recompute(port);
-
-                        string result = "Recompute result " + Program.myPort + " " + Program.distanceToPort.Count + " ";
-                        foreach (KeyValuePair<int, int> distance in Program.distanceToPort)
-                        {
-                            result += distance.Key + " " + distance.Value + " ";
-                        }
-                        Program.neighbours[port].Write.WriteLine(result);
+                        Program.AddConnectionToDictionary(int.Parse(splittedInput[1]), this);
                     }
-                    // Dit programma krijgt de routingtable binnen van een directe buurport
-                    else if (input.StartsWith("Recompute result"))
+                    if (input.StartsWith("MyDist"))
                     {
-                        bool changed = false;
-                        string[] splittedInput = input.Split();
-                        int fromPort = int.Parse(splittedInput[2]);
-                        int numberOfPorts = int.Parse(splittedInput[3]);
-                        for (int i = 0; i < numberOfPorts * 2; i += 2)
-                        {
-                            // Sla de eerste termen over van de inputregel tot de poortnummers
-                            int port = int.Parse(splittedInput[i + 4]);
-                            int distance = Math.Min(20, int.Parse(splittedInput[i + 5]) + 1);
-                            int prefN = fromPort;
+                        int toPort = int.Parse(splittedInput[1]);
+                        int distance = int.Parse(splittedInput[2]);
+                        int fromPort = int.Parse(splittedInput[3]);
+                        Console.WriteLine("MyDist ontvangen van " + fromPort + " tot " + toPort + " met afstand " + distance);
 
-                            if (Program.neighbours.ContainsKey(port))
-                            {
-                                distance = 1;
-                                prefN = port;
-                            }
-
-                            if (!Program.distanceToPort.ContainsKey(port))
-                            {
-                                Program.distanceToPort.Add(port, distance);
-                                Program.preferredNeighbours.Add(port, prefN);
-
-                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + prefN);
-
-                                changed = true;
-                            }
-                            else if (Program.distanceToPort[port] > distance)
-                            {
-                                Program.distanceToPort[port] = distance;
-                                Program.preferredNeighbours[port] = prefN;
-
-                                Console.WriteLine("Afstand naar " + port + " is nu " + distance + " via " + prefN);
-
-                                changed = true;
-                            }
-                        }
-                       
-                        // Als de waardes van de afstanden zijn geupdate, laat dit programma dan zijn routing table ook updaten
-                        if (changed)
-                        {
-                            Program.Recompute();
-                        }
+                        //Program.ndis[fromPort][toPort] = distance;
+                        //Program.ndis[toPort][fromPort] = distance;
+                        Program.ndis2[Tuple.Create(fromPort, toPort)] = distance;
+                        Program.ndis2[Tuple.Create(toPort, fromPort)] = distance;
+                        Console.WriteLine("hoi ik ga recompute aanroepen, groetjes");
+                        Program.Recompute(toPort);
                     }
-                    else if (input.StartsWith("B"))
-                    {
-                        string[] splittedInput = input.Split(new char[] { ' ' }, 3);
-                        int receiverPort = int.Parse(splittedInput[1]);
-                        string message = splittedInput[2];
-
-                        if (receiverPort == Program.myPort)
-                        {
-                            Console.WriteLine(message);
-                        }
-                        else
-                        {
-                            int redirectorPort = Program.preferredNeighbours[receiverPort];
-
-                            Console.WriteLine("Bericht voor " + receiverPort + " doorgestuurd naar " + redirectorPort);
-
-                            Program.neighbours[redirectorPort].Write.WriteLine("B " + receiverPort + " " + message);
-                        }
-                    }
-                    else if (input.StartsWith("Connect"))
-                    {
-                        int port = int.Parse(input.Split()[1]);
-                        Program.neighbours.Add(port, new Connection(port));
-                        Program.Recompute();
-                    }
+                    
                 }
             }
             catch
