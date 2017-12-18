@@ -19,11 +19,11 @@ Let op: deze berekening is niet het definitieve cijfer. Dit is alleen maar een a
 ------------------------------------
 
 Testcase;Status;Tijd;Omschrijving
-Standaard;Incorrect;9.28;Opstarten netwerk
+Standaard;Incorrect;4.43;Opstarten netwerk
 
 ------------------------------------
 
-1;Standaard;Incorrect;9.28;Opstarten netwerk
+1;Standaard;Incorrect;4.43;Opstarten netwerk
 Test 1 - Standaard
 
 Fout bij opzetten netwerk - de routing-tabel is incorrect.
@@ -74,233 +74,307 @@ start Concurrency-P2.exe 55505 55503 55504
 55502 < Verbonden: 55500
 55502 < MyDist ontvangen van 55500 tot 55500 met afstand 0
 55501 < MyDist ontvangen van 55500 tot 55500 met afstand 0
-55501 < Setting distance 0 to tuple (55500, 55500)
+55502 < N voor: 0
+55502 < Poort: 55500 ken ik niet!
+55501 < N voor: 0
+55502 < N na: 0
+55501 < Poort: 55500 ken ik niet!
+55502 < Setting distance 0 to tuple (55500, 55500)
+55501 < N na: 0
 55502 < Setting distance 0 to tuple (55500, 55500)
 55501 < Setting distance 0 to tuple (55500, 55500)
-55502 < Setting distance 0 to tuple (55500, 55500)
+55502 < hoi ik ga recompute aanroepen, groetjes
+55501 < Setting distance 0 to tuple (55500, 55500)
 55501 < hoi ik ga recompute aanroepen, groetjes
-55502 < hoi ik ga recompute aanroepen, groetjes
-55502 < RECOMPUTE YAAAAY
 55501 < RECOMPUTE YAAAAY
-55501 < GETCLOSESTNEIGHBOUR
-55501 < Getting distance from tuple: (55500, 55500), result: 0
-55502 < GETCLOSESTNEIGHBOUR
-55501 < BestN: 55500
-55502 < Getting distance from tuple: (55500, 55500), result: 0
-55502 < Verbonden: 55501
-55500 < MyDist ontvangen van 55501 tot 55501 met afstand 0
-55502 < MyDist ontvangen van 55501 tot 55501 met afstand 0
-55500 < Setting distance 0 to tuple (55501, 55501)
-55502 < Setting distance 0 to tuple (55501, 55501)
-55500 < Setting distance 0 to tuple (55501, 55501)
-55502 < Setting distance 0 to tuple (55501, 55501)
-55500 < hoi ik ga recompute aanroepen, groetjes
-55502 < hoi ik ga recompute aanroepen, groetjes
 55502 < RECOMPUTE YAAAAY
 55502 < GETCLOSESTNEIGHBOUR
+55501 < GETCLOSESTNEIGHBOUR
+55502 < Getting distance from tuple: (55500, 55500), result: 0
+55501 < Getting distance from tuple: (55500, 55500), result: 0
+55502 < Getting distance from tuple: (55503, 55500), result: 0
+55501 < BestN: -1
+55502 < Getting distance from tuple: (55504, 55500), result: 0
+55502 < BestN: -1
+55502 < Verbonden: 55501
+55502 < MyDist ontvangen van 55501 tot 55501 met afstand 0
+55500 < MyDist ontvangen van 55501 tot 55501 met afstand 0
+55502 < N voor: 0
+55500 < N voor: 0
+55502 < Poort: 55501 ken ik niet!
+55500 < Poort: 55501 ken ik niet!
+55502 < N na: 0
+55502 < Setting distance 0 to tuple (55501, 55501)
+55500 < N na: 0
+55502 < Setting distance 0 to tuple (55501, 55501)
+55500 < Setting distance 0 to tuple (55501, 55501)
+55502 < hoi ik ga recompute aanroepen, groetjes
+55500 < Setting distance 0 to tuple (55501, 55501)
+55502 < RECOMPUTE YAAAAY
+55502 < GETCLOSESTNEIGHBOUR
+55500 < hoi ik ga recompute aanroepen, groetjes
+55502 < Getting distance from tuple: (55500, 55501), result: 0
+55502 < Getting distance from tuple: (55503, 55501), result: 0
+55502 < Getting distance from tuple: (55504, 55501), result: 0
+55502 < Getting distance from tuple: (55501, 55501), result: 0
+55502 < BestN: -1
 55500 < RECOMPUTE YAAAAY
 55500 < GETCLOSESTNEIGHBOUR
 55500 < Getting distance from tuple: (55501, 55501), result: 0
+55500 < Getting distance from tuple: (55502, 55501), result: 0
+55500 < BestN: -1
 55501 < Verbonden: 55502
 55505 < Verbonden: 55503
 55502 < MyDist ontvangen van 55503 tot 55503 met afstand 0
+55502 < N voor: 0
 55505 < MyDist ontvangen van 55503 tot 55503 met afstand 0
+55502 < Poort: 55503 ken ik niet!
+55502 < N na: 0
+55505 < N voor: 0
 55502 < Setting distance 0 to tuple (55503, 55503)
+55505 < Poort: 55503 ken ik niet!
 55502 < Setting distance 0 to tuple (55503, 55503)
-55505 < Setting distance 0 to tuple (55503, 55503)
 55502 < hoi ik ga recompute aanroepen, groetjes
-55505 < Setting distance 0 to tuple (55503, 55503)
 55502 < RECOMPUTE YAAAAY
-55505 < hoi ik ga recompute aanroepen, groetjes
+55505 < N na: 0
 55502 < GETCLOSESTNEIGHBOUR
+55502 < Getting distance from tuple: (55500, 55503), result: 0
+55505 < Setting distance 0 to tuple (55503, 55503)
+55502 < Getting distance from tuple: (55503, 55503), result: 0
+55505 < Setting distance 0 to tuple (55503, 55503)
+55502 < Getting distance from tuple: (55504, 55503), result: 0
+55502 < Getting distance from tuple: (55501, 55503), result: 0
+55505 < hoi ik ga recompute aanroepen, groetjes
+55502 < BestN: -1
 55505 < RECOMPUTE YAAAAY
 55505 < GETCLOSESTNEIGHBOUR
 55505 < Getting distance from tuple: (55503, 55503), result: 0
-55505 < BestN: 55503
+55505 < BestN: -1
 55505 < Verbonden: 55504
 55502 < MyDist ontvangen van 55504 tot 55504 met afstand 0
+55502 < N voor: 0
 55505 < MyDist ontvangen van 55504 tot 55504 met afstand 0
+55502 < Poort: 55504 ken ik niet!
+55502 < N na: 0
+55505 < N voor: 0
 55502 < Setting distance 0 to tuple (55504, 55504)
-55505 < Setting distance 0 to tuple (55504, 55504)
+55505 < Poort: 55504 ken ik niet!
 55502 < Setting distance 0 to tuple (55504, 55504)
-55505 < Setting distance 0 to tuple (55504, 55504)
+55505 < N na: 0
 55502 < hoi ik ga recompute aanroepen, groetjes
+55505 < Setting distance 0 to tuple (55504, 55504)
 55502 < RECOMPUTE YAAAAY
-55505 < hoi ik ga recompute aanroepen, groetjes
+55505 < Setting distance 0 to tuple (55504, 55504)
 55502 < GETCLOSESTNEIGHBOUR
+55505 < hoi ik ga recompute aanroepen, groetjes
+55502 < Getting distance from tuple: (55500, 55504), result: 0
 55505 < RECOMPUTE YAAAAY
+55502 < Getting distance from tuple: (55503, 55504), result: 0
 55505 < GETCLOSESTNEIGHBOUR
+55502 < Getting distance from tuple: (55504, 55504), result: 0
+55505 < Getting distance from tuple: (55503, 55504), result: 0
+55502 < Getting distance from tuple: (55501, 55504), result: 0
+55502 < BestN: -1
+55505 < Getting distance from tuple: (55504, 55504), result: 0
+55505 < BestN: -1
 55504 < Verbonden: 55505
-55503 < MyDist ontvangen van 55505 tot 55505 met afstand 0
 55504 < MyDist ontvangen van 55505 tot 55505 met afstand 0
-55503 < Setting distance 0 to tuple (55505, 55505)
+55503 < MyDist ontvangen van 55505 tot 55505 met afstand 0
+55503 < N voor: 0
+55504 < N voor: 0
+55503 < Poort: 55505 ken ik niet!
+55504 < Poort: 55505 ken ik niet!
+55503 < N na: 0
+55504 < N na: 0
 55504 < Setting distance 0 to tuple (55505, 55505)
 55503 < Setting distance 0 to tuple (55505, 55505)
 55504 < Setting distance 0 to tuple (55505, 55505)
-55503 < hoi ik ga recompute aanroepen, groetjes
+55503 < Setting distance 0 to tuple (55505, 55505)
 55504 < hoi ik ga recompute aanroepen, groetjes
+55503 < hoi ik ga recompute aanroepen, groetjes
 55504 < RECOMPUTE YAAAAY
 55503 < RECOMPUTE YAAAAY
-55503 < GETCLOSESTNEIGHBOUR
 55504 < GETCLOSESTNEIGHBOUR
-55503 < Verbonden: 55502
-55504 < Verbonden: 55502
-55503 < MyDist ontvangen van 55502 tot 55502 met afstand 0
-55500 < MyDist ontvangen van 55502 tot 55502 met afstand 0
-55504 < MyDist ontvangen van 55502 tot 55502 met afstand 0
-55503 < Setting distance 0 to tuple (55502, 55502)
-55504 < Setting distance 0 to tuple (55502, 55502)
-55500 < Setting distance 0 to tuple (55502, 55502)
-55501 < MyDist ontvangen van 55502 tot 55502 met afstand 0
-55503 < Setting distance 0 to tuple (55502, 55502)
-55504 < Setting distance 0 to tuple (55502, 55502)
-55500 < Setting distance 0 to tuple (55502, 55502)
-55503 < hoi ik ga recompute aanroepen, groetjes
-55504 < hoi ik ga recompute aanroepen, groetjes
-55503 < RECOMPUTE YAAAAY
-55500 < hoi ik ga recompute aanroepen, groetjes
-55504 < RECOMPUTE YAAAAY
 55503 < GETCLOSESTNEIGHBOUR
-55500 < RECOMPUTE YAAAAY
-55504 < GETCLOSESTNEIGHBOUR
-55503 < Getting distance from tuple: (55502, 55502), result: 0
-55501 < Setting distance 0 to tuple (55502, 55502)
-55504 < Getting distance from tuple: (55502, 55502), result: 0
-55500 < GETCLOSESTNEIGHBOUR
-55501 < Setting distance 0 to tuple (55502, 55502)
-55501 < hoi ik ga recompute aanroepen, groetjes
-55501 < RECOMPUTE YAAAAY
-55501 < GETCLOSESTNEIGHBOUR
+55504 < Getting distance from tuple: (55502, 55505), result: 0
+55503 < Getting distance from tuple: (55502, 55505), result: 0
+55504 < Getting distance from tuple: (55505, 55505), result: 0
+55503 < Getting distance from tuple: (55505, 55505), result: 0
+55504 < BestN: -1
+55503 < BestN: -1
 55500 > R
 55501 > R
 55502 > R
 55503 > R
+55500 < 55500 0 local
 55504 > R
 55505 > R
+55501 < 55501 0 local
+55502 < 55502 0 local
+55503 < 55503 0 local
+55505 < 55505 0 local
+55504 < 55504 0 local
 
 Process 55500:
 Verbonden: 55501
 Verbonden: 55502
 MyDist ontvangen van 55501 tot 55501 met afstand 0
+N voor: 0
+Poort: 55501 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55501, 55501)
 Setting distance 0 to tuple (55501, 55501)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
 Getting distance from tuple: (55501, 55501), result: 0
-MyDist ontvangen van 55502 tot 55502 met afstand 0
-Setting distance 0 to tuple (55502, 55502)
-Setting distance 0 to tuple (55502, 55502)
-hoi ik ga recompute aanroepen, groetjes
-RECOMPUTE YAAAAY
-GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55502, 55501), result: 0
+BestN: -1
 > R
+55500 0 local
 
 Process 55501:
 Verbonden: 55500
 MyDist ontvangen van 55500 tot 55500 met afstand 0
+N voor: 0
+Poort: 55500 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55500, 55500)
 Setting distance 0 to tuple (55500, 55500)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
 Getting distance from tuple: (55500, 55500), result: 0
-BestN: 55500
+BestN: -1
 Verbonden: 55502
-MyDist ontvangen van 55502 tot 55502 met afstand 0
-Setting distance 0 to tuple (55502, 55502)
-Setting distance 0 to tuple (55502, 55502)
-hoi ik ga recompute aanroepen, groetjes
-RECOMPUTE YAAAAY
-GETCLOSESTNEIGHBOUR
 > R
+55501 0 local
 
 Process 55502:
 Verbonden: 55503
 Verbonden: 55504
 Verbonden: 55500
 MyDist ontvangen van 55500 tot 55500 met afstand 0
+N voor: 0
+Poort: 55500 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55500, 55500)
 Setting distance 0 to tuple (55500, 55500)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
 Getting distance from tuple: (55500, 55500), result: 0
+Getting distance from tuple: (55503, 55500), result: 0
+Getting distance from tuple: (55504, 55500), result: 0
+BestN: -1
 Verbonden: 55501
 MyDist ontvangen van 55501 tot 55501 met afstand 0
+N voor: 0
+Poort: 55501 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55501, 55501)
 Setting distance 0 to tuple (55501, 55501)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55500, 55501), result: 0
+Getting distance from tuple: (55503, 55501), result: 0
+Getting distance from tuple: (55504, 55501), result: 0
+Getting distance from tuple: (55501, 55501), result: 0
+BestN: -1
 MyDist ontvangen van 55503 tot 55503 met afstand 0
+N voor: 0
+Poort: 55503 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55503, 55503)
 Setting distance 0 to tuple (55503, 55503)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55500, 55503), result: 0
+Getting distance from tuple: (55503, 55503), result: 0
+Getting distance from tuple: (55504, 55503), result: 0
+Getting distance from tuple: (55501, 55503), result: 0
+BestN: -1
 MyDist ontvangen van 55504 tot 55504 met afstand 0
+N voor: 0
+Poort: 55504 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55504, 55504)
 Setting distance 0 to tuple (55504, 55504)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55500, 55504), result: 0
+Getting distance from tuple: (55503, 55504), result: 0
+Getting distance from tuple: (55504, 55504), result: 0
+Getting distance from tuple: (55501, 55504), result: 0
+BestN: -1
 > R
+55502 0 local
 
 Process 55503:
 Verbonden: 55505
 MyDist ontvangen van 55505 tot 55505 met afstand 0
+N voor: 0
+Poort: 55505 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55505, 55505)
 Setting distance 0 to tuple (55505, 55505)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
-Verbonden: 55502
-MyDist ontvangen van 55502 tot 55502 met afstand 0
-Setting distance 0 to tuple (55502, 55502)
-Setting distance 0 to tuple (55502, 55502)
-hoi ik ga recompute aanroepen, groetjes
-RECOMPUTE YAAAAY
-GETCLOSESTNEIGHBOUR
-Getting distance from tuple: (55502, 55502), result: 0
+Getting distance from tuple: (55502, 55505), result: 0
+Getting distance from tuple: (55505, 55505), result: 0
+BestN: -1
 > R
+55503 0 local
 
 Process 55504:
 Verbonden: 55505
 MyDist ontvangen van 55505 tot 55505 met afstand 0
+N voor: 0
+Poort: 55505 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55505, 55505)
 Setting distance 0 to tuple (55505, 55505)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
-Verbonden: 55502
-MyDist ontvangen van 55502 tot 55502 met afstand 0
-Setting distance 0 to tuple (55502, 55502)
-Setting distance 0 to tuple (55502, 55502)
-hoi ik ga recompute aanroepen, groetjes
-RECOMPUTE YAAAAY
-GETCLOSESTNEIGHBOUR
-Getting distance from tuple: (55502, 55502), result: 0
+Getting distance from tuple: (55502, 55505), result: 0
+Getting distance from tuple: (55505, 55505), result: 0
+BestN: -1
 > R
+55504 0 local
 
 Process 55505:
 Verbonden: 55503
 MyDist ontvangen van 55503 tot 55503 met afstand 0
+N voor: 0
+Poort: 55503 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55503, 55503)
 Setting distance 0 to tuple (55503, 55503)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
 Getting distance from tuple: (55503, 55503), result: 0
-BestN: 55503
+BestN: -1
 Verbonden: 55504
 MyDist ontvangen van 55504 tot 55504 met afstand 0
+N voor: 0
+Poort: 55504 ken ik niet!
+N na: 0
 Setting distance 0 to tuple (55504, 55504)
 Setting distance 0 to tuple (55504, 55504)
 hoi ik ga recompute aanroepen, groetjes
 RECOMPUTE YAAAAY
 GETCLOSESTNEIGHBOUR
+Getting distance from tuple: (55503, 55504), result: 0
+Getting distance from tuple: (55504, 55504), result: 0
+BestN: -1
 > R
+55505 0 local
 
 Microsoft Windows NT 6.2.9200.0 (x64)
 .NET version: 4.0.30319.42000

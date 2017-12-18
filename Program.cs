@@ -12,14 +12,12 @@ namespace CCPract2
 {
     class Program
     {
-
         public static int myPort;                                                                               // port number
         public static Dictionary<int, Connection> neighbours = new Dictionary<int, Connection>();               // connecties met buren 
         public static Dictionary<int, int> preferredNeighbours = new Dictionary<int, int>();                    // key = eindbestemming en value = via welke buur het snelste is
         public static Dictionary<int, int> distanceToPort = new Dictionary<int, int>();                         // key = eindbestemming en value = afstand van huidige tot eindbestemming
         public static Dictionary<Tuple<int, int>, int> ndis = new Dictionary<Tuple<int, int>, int>();           // key = tuple van ports waartussen we de afstand willen weten, minstens een van deze poorts is een neighbour, value = afstand tussen deze twee ports
         public static HashSet<int> allNodes = new HashSet<int>();                                               // Alle bekende nodes in het netwerk
-        public static int maxNetworkSize = 20;                                                                  // Maximale grootte van het netwerk op dit moment
 
         static void Main(string[] args)
         {
@@ -69,7 +67,7 @@ namespace CCPract2
         {
             Console.WriteLine("GETCLOSESTNEIGHBOUR");
             // initialize the closest distance on the size of the network and the best neighbour on -1 (undefined)
-            int closest = maxNetworkSize;
+            int closest = MaxNetworkSize();
             int bestNeighbour = -1;
             // loop through the neighbours and get the distances from this neighbour to the port from the ndis
             foreach (KeyValuePair<int,Connection> kv in neighbours)
@@ -96,8 +94,8 @@ namespace CCPract2
                 {
                     if (j != i)
                     {
-                        ndis[Tuple.Create(i, j)] = maxNetworkSize;
-                        ndis[Tuple.Create(j, i)] = maxNetworkSize;
+                        ndis[Tuple.Create(i, j)] = MaxNetworkSize();
+                        ndis[Tuple.Create(j, i)] = MaxNetworkSize();
                     }
                 }
             }
@@ -143,6 +141,12 @@ namespace CCPract2
                     neighbour.Value.Write.WriteLine(message);
                 }
             }
+        }
+
+        // returns the size of the network, the max distance a node can be from another one
+        public static int MaxNetworkSize()
+        {
+            return allNodes.Count + 1;
         }
     }
 
@@ -328,12 +332,12 @@ namespace CCPract2
                         {
                             Console.WriteLine("Poort: " + toPort + " ken ik niet!");
                             Program.allNodes.Add(toPort);
-                            Program.distanceToPort[toPort] = Program.maxNetworkSize;
+                            Program.distanceToPort[toPort] = Program.MaxNetworkSize();
                             Program.preferredNeighbours[toPort] = -1;
                             foreach (KeyValuePair<int, Connection> n in Program.neighbours)
                             {
-                                Program.ndis[Tuple.Create(toPort, n.Key)] = Program.maxNetworkSize;
-                                Program.ndis[Tuple.Create(n.Key, toPort)] = Program.maxNetworkSize;
+                                Program.ndis[Tuple.Create(toPort, n.Key)] = Program.MaxNetworkSize();
+                                Program.ndis[Tuple.Create(n.Key, toPort)] = Program.MaxNetworkSize();
                             }
                         }
 
@@ -342,7 +346,6 @@ namespace CCPract2
                         Program.ndis[Tuple.Create(toPort, fromPort)] = distance;
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + fromPort + ", " + toPort + ")");
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + toPort + ", " + fromPort + ")");
-                        Console.WriteLine("hoi ik ga recompute aanroepen, groetjes");
                         // recompute
                         Program.Recompute(toPort);
                     }
