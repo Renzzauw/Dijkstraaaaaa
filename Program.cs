@@ -88,14 +88,16 @@ namespace CCPract2
         public static void Init()
         {
             // loop through all the known nodes and create all combinations in the ndis dictionary with the current maxnetworksize
-            for (int i = 0; i < allNodes.Count; i++)
+            foreach (int i in allNodes)
             {
-                for (int j = 1; j < allNodes.Count; j++)
+                foreach (int j in allNodes)
                 {
                     if (j != i)
                     {
                         ndis[Tuple.Create(i, j)] = MaxNetworkSize();
                         ndis[Tuple.Create(j, i)] = MaxNetworkSize();
+                        Console.WriteLine("Setting distance " + MaxNetworkSize() + " to tuple (" + i + ", " + j + ")");
+                        Console.WriteLine("Setting distance " + MaxNetworkSize() + " to tuple (" + j + ", " + i + ")");
                     }
                 }
             }
