@@ -206,6 +206,8 @@ namespace CCPract2
                                 Console.WriteLine(kv.Key + " " + kv.Value + " " + Program.preferredNeighbours[kv.Key]);
                             }
                         }
+
+                        // TODO : delete the known nodes message
                         string output = "Known nodes:";
                         foreach(int i in Program.allNodes)
                         {
@@ -215,30 +217,47 @@ namespace CCPract2
                     }
                     else if (input.StartsWith("B"))
                     {
-                        /*
+                        // split the input in three parts, the B, the port and the message
                         string[] portAndMessage = input.Split(new char[] { ' ' }, 3);
                         int port = int.Parse(portAndMessage[1]);
                         string message = portAndMessage[2];
 
-                        // Send Message to Port
-                        int prefN = Program.preferredNeighbours[port];
-
-                        Console.WriteLine("Bericht voor " + port + " doorgestuurd naar " + prefN);
-
-                        Program.neighbours[prefN].Write.WriteLine("B " + port + " " + message);
-                        */
-                        // TODO : error afvangen als hij poort niet kent
+                        // if we don't know the destination node, write this to the console
+                        if (!Program.allNodes.Contains(port))
+                        {
+                            Console.WriteLine("Poort " + port + " is niet bekend");
+                        }
+                        else
+                        {
+                            // get the preferred neighbour for the destination port
+                            int prefN = Program.preferredNeighbours[port];
+                            // write to the console that we sent the message to the preferred neighbour
+                            Console.WriteLine("Bericht voor " + port + " doorgestuurd naar " + prefN);
+                            // send the message to the preferred neighbour
+                            Program.neighbours[prefN].Write.WriteLine("B " + port + " " + message);
+                        }
                     }
                     else if (input.StartsWith("C"))
                     {
-                        /*
+                        // get the port we want to connect to
                         int port = int.Parse(input.Split()[1]);
-
-                        Program.neighbours.Add(port, new Connection(port));
-                        Program.neighbours[port].Write.WriteLine("Connect " + Program.myPort);
-                        Program.Recompute();
-                        */
-                        // Connect to Port
+                        // add this port to the neighbour dictionary
+                        Program.AddConnectionToDictionary(port, new Connection(port));
+                        // add it to allnodes
+                        Program.allNodes.Add(port);
+                        // set the distance to this port to 1
+                        Program.distanceToPort[port] = 1;
+                        // and the preferred neighbour to itself
+                        Program.preferredNeighbours[port] = port;
+                        // write a c myport message to the port we want to connect to
+                        Program.neighbours[port].Write.WriteLine("C " + Program.myPort);
+                        // create a mydist message to this new neighbour
+                        string message = "MyDist " + port + " " + Program.distanceToPort[port] + " " + Program.myPort;
+                        // write the mydist to all the neighbours
+                        foreach (KeyValuePair<int, Connection> n in Program.neighbours)
+                        {
+                            n.Value.Write.WriteLine(message);
+                        }
                     }
                     else if (input.StartsWith("D"))
                     {
@@ -319,7 +338,8 @@ namespace CCPract2
                     // Als A verbindt met B, voegt B ook nog A toe aan zijn dictionaries
                     if (input.StartsWith("Poort"))
                     {
-                        Program.AddConnectionToDictionary(int.Parse(splittedInput[1]), this);
+                        int port = int.Parse(splittedInput[1]);
+                        Program.AddConnectionToDictionary(port, this);
                     }
                     if (input.StartsWith("MyDist"))
                     {
@@ -351,7 +371,47 @@ namespace CCPract2
                         // recompute
                         Program.Recompute(toPort);
                     }
-                    
+                    if (input.StartsWith("B"))
+                    {
+                        // split the input in three parts, the B, the port and the message
+                        string[] portAndMessage = input.Split(new char[] { ' ' }, 3);
+                        int port = int.Parse(portAndMessage[1]);
+                        string message = portAndMessage[2];
+
+                        if (port == Program.myPort)
+                        {
+                            Console.WriteLine(message);
+                        }
+                        else
+                        {
+                            // get the preferred neighbour for the destination port
+                            int prefN = Program.preferredNeighbours[port];
+                            // write to the console that we sent the message to the preferred neighbour
+                            Console.WriteLine("Bericht voor " + port + " doorgestuurd naar " + prefN);
+                            // send the message to the preferred neighbour
+                            Program.neighbours[prefN].Write.WriteLine("B " + port + " " + message);
+                        }
+                    }
+                    if (input.StartsWith("C"))
+                    {
+                        // get the port we want to connect to
+                        int port = int.Parse(input.Split()[1]);
+                        // add this port to the neighbour dictionary
+                        Program.AddConnectionToDictionary(port, new Connection(port));
+                        // add it to allnodes
+                        Program.allNodes.Add(port);
+                        // set the distance to this port to 1
+                        Program.distanceToPort[port] = 1;
+                        // and the preferred neighbour to itself
+                        Program.preferredNeighbours[port] = port;
+                        // create a mydist message to this new neighbour
+                        string message = "MyDist " + port + " " + Program.distanceToPort[port] + " " + Program.myPort;
+                        // write the mydist to all the neighbours
+                        foreach (KeyValuePair<int, Connection> n in Program.neighbours)
+                        {
+                            n.Value.Write.WriteLine(message);
+                        }
+                    }
                 }
             }
             catch
