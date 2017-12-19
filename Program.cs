@@ -19,6 +19,9 @@ namespace CCPract2
         public static Dictionary<Tuple<int, int>, int> ndis = new Dictionary<Tuple<int, int>, int>();           // key = tuple van ports waartussen we de afstand willen weten, minstens een van deze poorts is een neighbour, value = afstand tussen deze twee ports
         public static HashSet<int> allNodes = new HashSet<int>();                                               // Alle bekende nodes in het netwerk
 
+        public static List<Tuple<int, int>> ALLENODES = new List<Tuple<int, int>>();
+
+
         static void Main(string[] args)
         {
             // haalt het poortnummer op van de huidige port
@@ -47,7 +50,7 @@ namespace CCPract2
                 // zet de preferred neighbour op zichzelf
                 //preferredNeighbours[port] = port;
             }
-            Init();
+            ALLENODES = RecomputeDijkstra(myPort);
         }
 
         // voeg een port toe aan de burendictionary als deze nog niet bestaat
@@ -65,7 +68,7 @@ namespace CCPract2
         // methode voor het verkrijgen van de beste buur bij een gegeven eindbestemming
         private static int GetClosestNeighbour(int port)
         {
-            Console.WriteLine("GETCLOSESTNEIGHBOUR");
+            //Console.WriteLine("GETCLOSESTNEIGHBOUR");
             // initialize the closest distance on the size of the network and the best neighbour on -1 (undefined)
             int closest = MaxNetworkSize();
             int bestNeighbour = -1;
@@ -85,64 +88,47 @@ namespace CCPract2
             return bestNeighbour;
         }
 
-        public static void Init()
+        // Onze eigen recompute via het dijkstra algoritme
+        public static List<Tuple<int, int>> RecomputeDijkstra(int port)
         {
-            // loop through all the known nodes and create all combinations in the ndis dictionary with the current maxnetworksize
-            foreach (int i in allNodes)
-            {
-                foreach (int j in allNodes)
+            // cost-so-far = 0, huidige (begin)poort
+            int distance = 0;
+            Tuple<int, int> startNode = Tuple.Create(0, port);
+            List<Tuple<int, int>> beenhere = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> allNodes = new List<Tuple<int, int>>();
+            beenhere.Add(startNode);
+
+            while (beenhere.Count != 0)
+            {               
+                // pop 
+                Tuple<int, int> firstElem = beenhere[0];
+                beenhere.RemoveAt(0);
+                //Console.WriteLine("First Element: "+firstElem);
+                // Dijkstra heeft deze node al eerder gezien
+                if (beenhere.Contains(firstElem))
                 {
-                    if (j != i)
+                    continue;
+                }
+
+                // voeg node toe aan closed lijst
+                beenhere.Add(firstElem);
+
+                // Verhoog distance met 1
+                distance++;
+
+                // Verkrijg buren van huidige node en voeg ze toe aan de beenhere lijst 
+                foreach (KeyValuePair<int, Connection> neighbour in neighbours)
+                {
+                    //Console.WriteLine("Neighbour: " + neighbour);
+                    if (!beenhere.Contains(Tuple.Create(distance, neighbour.Key)))
                     {
-                        ndis[Tuple.Create(i, j)] = MaxNetworkSize();
-                        ndis[Tuple.Create(j, i)] = MaxNetworkSize();
-                        Console.WriteLine("Setting distance " + MaxNetworkSize() + " to tuple (" + i + ", " + j + ")");
-                        Console.WriteLine("Setting distance " + MaxNetworkSize() + " to tuple (" + j + ", " + i + ")");
+                        allNodes.Add(Tuple.Create(distance, neighbour.Key));
                     }
                 }
             }
-
-            // create a mydist message from this port to itself with distance 0 and send it to all the neighbours
-            string message = "MyDist " + myPort + " 0 " + myPort;
-
-            foreach (KeyValuePair<int,Connection> neighbour in neighbours)
-            {
-                neighbour.Value.Write.WriteLine(message);
-            }
-        }
-
-        // herberekent afstanden van het netwerk
-        public static void Recompute(int port)
-        {
-            Console.WriteLine("RECOMPUTE YAAAAY");
-
-            int oldDistance = distanceToPort[port];
-            
-            // checkt of de meegegeven port de huidige port is en zet daarvan de afstand op 0
-            if (port == myPort)
-            {
-                distanceToPort[port] = 0;
-                preferredNeighbours[port] = port;
-            }
-            // bereken de afstand en tel daar 1 bij op
-            else
-            {
-                int bestNeighbour = GetClosestNeighbour(port);
-                Console.WriteLine("BestN: " + bestNeighbour);
-                preferredNeighbours[port] = bestNeighbour;
-                distanceToPort[port] = ndis[Tuple.Create(bestNeighbour, port)] + 1;
-            }
-
-            // Als de afstand veranderd is, stuur dan een bericht naar ale buren
-            if (distanceToPort[port] != oldDistance)
-            {
-                string message = "MyDist " + port + " " + distanceToPort[port] + " " + myPort;
-
-                foreach (KeyValuePair<int,Connection> neighbour in neighbours)
-                {
-                    neighbour.Value.Write.WriteLine(message);
-                }
-            }
+            Console.WriteLine("DIJKSTRA COMPLETED");
+            Console.WriteLine(allNodes);
+            return allNodes;
         }
 
         // returns the size of the network, the max distance a node can be from another one
@@ -369,7 +355,10 @@ namespace CCPract2
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + fromPort + ", " + toPort + ")");
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + toPort + ", " + fromPort + ")");
                         // recompute
-                        Program.Recompute(toPort);
+                        //Program.Recompute(toPort);
+                        Program.ALLENODES = Program.RecomputeDijkstra(toPort);
+
+                        
                     }
                     if (input.StartsWith("B"))
                     {
