@@ -50,7 +50,10 @@ namespace CCPract2
                 // zet de preferred neighbour op zichzelf
                 //preferredNeighbours[port] = port;
             }
+            Console.WriteLine("A");
             ALLENODES = RecomputeDijkstra(myPort);
+            Console.WriteLine("B");
+            Console.WriteLine(ALLENODES);
         }
 
         // voeg een port toe aan de burendictionary als deze nog niet bestaat
@@ -99,7 +102,9 @@ namespace CCPract2
             beenhere.Add(startNode);
 
             while (beenhere.Count != 0)
-            {               
+            {
+
+                Console.WriteLine(beenhere.Count);
                 // pop 
                 Tuple<int, int> firstElem = beenhere[0];
                 beenhere.RemoveAt(0);
@@ -327,6 +332,8 @@ namespace CCPract2
                         int port = int.Parse(splittedInput[1]);
                         Program.AddConnectionToDictionary(port, this);
                     }
+
+                    /*
                     if (input.StartsWith("MyDist"))
                     {
                         // get the toPort, distance and fromPort values from the message
@@ -354,12 +361,15 @@ namespace CCPract2
                         Program.ndis[Tuple.Create(toPort, fromPort)] = distance;
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + fromPort + ", " + toPort + ")");
                         Console.WriteLine("Setting distance " + distance + " to tuple (" + toPort + ", " + fromPort + ")");
-                        // recompute
-                        //Program.Recompute(toPort);
-                        Program.ALLENODES = Program.RecomputeDijkstra(toPort);
+                        */
+                    // recompute
+                    //Program.Recompute(toPort);
+
+                    // Program.ALLENODES = Program.RecomputeDijkstra(toPort);
 
                         
                     }
+                    /*
                     if (input.StartsWith("B"))
                     {
                         // split the input in three parts, the B, the port and the message
@@ -381,6 +391,8 @@ namespace CCPract2
                             Program.neighbours[prefN].Write.WriteLine("B " + port + " " + message);
                         }
                     }
+                    */
+                    /*
                     if (input.StartsWith("C"))
                     {
                         // get the port we want to connect to
@@ -401,7 +413,9 @@ namespace CCPract2
                             n.Value.Write.WriteLine(message);
                         }
                     }
+                    
                 }
+                */
             }
             catch
             {
